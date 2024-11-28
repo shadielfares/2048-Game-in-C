@@ -1,6 +1,7 @@
 #include "raylib.h"
 #include "gui.h"
 #include "macros.h"
+#include "tile_generation.h"
 
 //----------------------- -------------------------------------------------------------
 // Program main entry point
@@ -40,10 +41,9 @@ int main(int argc, char *argv[])
         const int tileHeight = (int)((double)(gameHeight - border * 2) / (double)gridRows - (double)(2 * tilePadding));
 
 
-        int grid[gridRows][gridCols] = { {0, 256, 1024, 4},
-                                        {0, 0, 0, 4},
-                                        {64, 2, 0, 8},
-                                        {32, 2, 16, 4} };
+        int grid[gridRows][gridCols];
+
+        initializeGrid(grid);
 
         InitWindow(screenWidth, screenHeight, "The Matrix");
 
@@ -56,15 +56,19 @@ int main(int argc, char *argv[])
 
             if (IsKeyPressed(KEY_RIGHT)) {
                 printf("Right");
+                addRandomTile(grid);
             }
             else if (IsKeyPressed(KEY_DOWN)) {
                 printf("Down");
+                addRandomTile(grid);
             }
             else if (IsKeyPressed(KEY_LEFT)) {
                 printf("Left");
+                addRandomTile(grid);
             }
             else if (IsKeyPressed(KEY_UP)) {
                 printf("Up");
+                addRandomTile(grid);
             }
 
             display2048GUI(screenHeight, screenWidth, gameHeight, gameWidth, tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid);

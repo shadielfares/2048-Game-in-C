@@ -15,7 +15,7 @@
 #define TILE1024   (Color){217, 167, 2, 255}
 #define TILE2048   (Color){54, 201, 24, 255}
 
-void display2048GUI(const int tilePadding, const int border, const int tileWidth, const int tileHeight, const int fontAdjustX, const int fontAdjustY, const int fontSize, int grid[gridRows][gridCols]) {
+void display2048GUI(const int screenHeight, const int screenWidth, const int gameHeight, const int gameWidth, const int tilePadding, const int border, const int tileWidth, const int tileHeight, const int fontAdjustX, const int fontAdjustY, const int fontSize, int grid[gridRows][gridCols]) {
 
     char string[10];
 
@@ -24,10 +24,18 @@ void display2048GUI(const int tilePadding, const int border, const int tileWidth
     ClearBackground(BACKGROUND);
 
     int currentX = tilePadding + border;
-    int currentY = tilePadding + border;
+    int currentY = tilePadding + border + screenHeight - gameHeight;
 
     for (int row = 0; row < gridRows; row++) {
         for (int col = 0; col < gridCols; col++) {
+
+            char score[] = "Score: 512";
+
+            int centerX = screenWidth * 0.5 + fontAdjustX * strlen(score);
+            int centerY = screenHeight * 0.04;
+                
+            DrawText(score, centerX + 3, centerY + 3, fontSize, DARKBROWN);
+            DrawText(score, centerX, centerY, fontSize, WHITE);
 
             DrawRectangle(currentX, currentY, tileWidth, tileHeight, EMPTY_TILE);
 
@@ -74,13 +82,14 @@ void display2048GUI(const int tilePadding, const int border, const int tileWidth
 
                 sprintf(string, "%d", grid[row][col]);
 
-                const int centerX = currentX + (double)tileWidth / 2 + fontAdjustX * strlen(string);
-                const int centerY = currentY + (double)tileHeight / 2 + fontAdjustY;
-
-                DrawText(string, centerX, centerY, fontSize, DARKBROWN); 
+                centerX = currentX + (double)tileWidth / 2 + fontAdjustX * strlen(string);
+                centerY = currentY + (double)tileHeight / 2 + fontAdjustY;
+                
+                DrawText(string, centerX + 3, centerY + 3, fontSize, DARKBROWN);
+                DrawText(string, centerX, centerY, fontSize, WHITE); 
+                
             
             }
-    
 
             currentX += tileWidth + tilePadding * 2;
 
