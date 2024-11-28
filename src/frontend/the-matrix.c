@@ -23,7 +23,10 @@ int main(int argc, char *argv[])
     //-------------------------------------------------------------------------------------
 
         const int screenWidth = 800;
-        const int screenHeight = 800;
+        const int screenHeight = 900;
+
+        const int gameWidth = screenWidth;
+        const int gameHeight = 800;
 
         const int fontSize = 50;
         const int fontAdjustX = -13;
@@ -33,8 +36,8 @@ int main(int argc, char *argv[])
         const int border = 10;
         const int tilePadding = 10;
 
-        const int tileWidth = (int)((double)(screenWidth - border * 2) / (double)gridCols - (double)(2 * tilePadding));
-        const int tileHeight = (int)((double)(screenHeight - border * 2) / (double)gridRows - (double)(2 * tilePadding));
+        const int tileWidth = (int)((double)(gameWidth - border * 2) / (double)gridCols - (double)(2 * tilePadding));
+        const int tileHeight = (int)((double)(gameHeight - border * 2) / (double)gridRows - (double)(2 * tilePadding));
 
 
         int grid[gridRows][gridCols] = { {0, 256, 1024, 4},
@@ -42,7 +45,7 @@ int main(int argc, char *argv[])
                                         {64, 2, 0, 8},
                                         {32, 2, 16, 4} };
 
-        InitWindow(screenWidth, screenHeight, "2048");
+        InitWindow(screenWidth, screenHeight, "The Matrix");
 
         SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
         //--------------------------------------------------------------------------------------
@@ -64,7 +67,7 @@ int main(int argc, char *argv[])
                 printf("Up");
             }
 
-            display2048GUI(tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid);
+            display2048GUI(screenHeight, screenWidth, gameHeight, gameWidth, tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid);
 
         }
 
