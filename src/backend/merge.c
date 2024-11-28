@@ -1,19 +1,17 @@
 #include <stdio.h>
+#include "macros.h"
 
-#define ROWS 4
-#define COLUMNS 4
-
-int testGrid[ROWS][COLUMNS] = { {2,4,0,0}, {2,4,16,16}, {2,0,0,0}, {2,0,0,0} };
+int testGrid[gridRows][gridCols] = { {2,4,0,0}, {2,4,16,16}, {2,0,0,0}, {2,0,0,0} };
 
 /*
  * Params: 2D Array
  * Return: Void
  */
 
-void printArray(int matrix[ROWS][COLUMNS]){
+void printArray(int matrix[gridRows][gridCols]){
 
-    for(int i = 0; i < ROWS; i++){
-        for(int j = 0; j < COLUMNS ; j++){
+    for(int i = 0; i < gridRows; i++){
+        for(int j = 0; j < gridCols ; j++){
             printf("%d", matrix[i][j]);
         }
         printf("\n");
@@ -28,7 +26,7 @@ void printArray(int matrix[ROWS][COLUMNS]){
 
 void printRow(int *row){
 
-    for(int i = 0; i < COLUMNS; i++){
+    for(int i = 0; i < gridCols; i++){
         printf("%d", row[i]);
     }
     printf("\n");
@@ -41,7 +39,7 @@ void printRow(int *row){
 
 void printColumn(int *column){
 
-    for(int i = 0; i < ROWS; i++){
+    for(int i = 0; i < gridRows; i++){
         printf("%d", column[i]);
     }
     printf("\n");
@@ -52,8 +50,8 @@ void printColumn(int *column){
  * Return: Single Row at specified index
  */
 
-int *getRow(int matrix[ROWS][COLUMNS], int index){
-    if (index < 0 || index >= ROWS){
+int *getRow(int matrix[gridRows][gridCols], int index){
+    if (index < 0 || index >= gridRows){
         printf("Fix the index value");
         return NULL;
     } else {
@@ -66,11 +64,11 @@ int *getRow(int matrix[ROWS][COLUMNS], int index){
  * Return: Void (changes Column value)
  */
 
-void getColumn(int matrix[ROWS][COLUMNS], int index, int column[COLUMNS]){
-    if (index < 0 || index >= COLUMNS){
+void getColumn(int matrix[gridRows][gridCols], int index, int column[gridCols]){
+    if (index < 0 || index >= gridCols){
         printf("Fix the index value");
     } else {
-        for (int i = 0; i < COLUMNS; i++){
+        for (int i = 0; i < gridCols; i++){
             //Get first index of all rows
             column[i] = matrix[i][index]; 
         }
@@ -84,7 +82,7 @@ void getColumn(int matrix[ROWS][COLUMNS], int index, int column[COLUMNS]){
  */
 
 int *mergeRight(int *row){
-    for (int i = (ROWS-1); i > 0; i--){
+    for (int i = (gridRows-1); i > 0; i--){
         if (row[i] == row[i-1]){
             row[i] += row[i-1];
             row[i-1] = 0;
@@ -100,7 +98,7 @@ int *mergeRight(int *row){
  */
 
 int *mergeLeft(int *row){
-    for (int i = 0; i < ROWS; i++){
+    for (int i = 0; i < gridRows; i++){
         if (row[i+1] == row[i]){
             row[i] += row[i+1];
             row[i+1] = 0;
@@ -116,7 +114,7 @@ int *mergeLeft(int *row){
  */
 
 int *mergeUp(int *column){
-    for (int i = (COLUMNS-1); i > 0; i--){
+    for (int i = (gridCols-1); i > 0; i--){
         if (column[i-1] == column[i]){
             column[i-1] += column[i];
             column[i] = 0;
@@ -132,7 +130,7 @@ int *mergeUp(int *column){
  */
 
 int *mergeDown(int *column){
-    for (int i = 0; i < COLUMNS; i++){
+    for (int i = 0; i < gridCols; i++){
         if (column[i+1] == column[i]){
             column[i+1] += column[i];
             column[i] = 0;
@@ -141,8 +139,8 @@ int *mergeDown(int *column){
     return column;
 }
 
-void mergeColumn(int matrix[ROWS][COLUMNS], int column[COLUMNS], int index){
-        for (int i = 0; i < COLUMNS; i++){
+void mergeColumn(int matrix[gridRows][gridCols], int column[gridCols], int index){
+        for (int i = 0; i < gridCols; i++){
             //Get first index of all rows
             matrix[i][index] = column[i]; 
         }
@@ -155,28 +153,28 @@ void mergeColumn(int matrix[ROWS][COLUMNS], int column[COLUMNS], int index){
  * Return: Depends on Direction
  */
 
-void merge(int matrix[ROWS][COLUMNS], int direction){
+void merge(int matrix[gridRows][gridCols], int direction){
     //Merging Right = 1
     //Merging Left = 2
     //Merging Up = 3
     //Merging Down = 4
     if (direction == 1){
-        for (int i = 0; i < ROWS; i++){
+        for (int i = 0; i < gridRows; i++){
             int *row = getRow(matrix, i);
             mergeRight(row);
         }
     }
 
     if (direction == 2){
-        for (int i = 0; i < ROWS; i++){
+        for (int i = 0; i < gridRows; i++){
             int *row = getRow(matrix, i);
             mergeLeft(row);
         }
     }
 
     if (direction == 3){
-        int columnArr[COLUMNS];
-        for (int i = 0; i < COLUMNS; i++){
+        int columnArr[gridCols];
+        for (int i = 0; i < gridCols; i++){
             getColumn(matrix, i, columnArr);
             mergeUp(columnArr);
             mergeColumn(matrix, mergeUp(columnArr), i);
@@ -184,8 +182,8 @@ void merge(int matrix[ROWS][COLUMNS], int direction){
     }
 
     if (direction == 4){
-        int columnArr[COLUMNS];
-        for (int i = 0; i < COLUMNS; i++){
+        int columnArr[gridCols];
+        for (int i = 0; i < gridCols; i++){
             getColumn(matrix, i, columnArr);
             mergeColumn(matrix, mergeDown(columnArr), i);
         }
@@ -208,7 +206,7 @@ void merge(int matrix[ROWS][COLUMNS], int direction){
     //printf("\nGRID PRE ACTION\n");
     //printArray(testGrid);
 
-    //printf("\nPRINTING COLUMNS MERGED DOWN\n");
+    //printf("\nPRINTING gridCols MERGED DOWN\n");
     //merge(testGrid, 2);
     //printArray(testGrid);
     //return 0;
