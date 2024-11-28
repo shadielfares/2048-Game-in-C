@@ -1,0 +1,22 @@
+name: Load Dependencies for 2048 GUI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Raylib and Run Makefile
+      run: sudo apt install libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev libwayland-dev libxkbcommon-dev; git clone --depth 1 https://github.com/raysan5/raylib.git raylib; cd raylib/src/; make PLATFORM=PLATFORM_DESKTOP; sudo make install; gcc -o ../../main ../../src/frontend/main.c -lraylib -lGL -lm -lpthread -ldl -lrt -lX11; sudo ldconfig;
+    
+    - name: Upload GUI Executable
+      if: ${{ always() }}
+
+      uses: actions/upload-artifact@v4
+      with:
+        name: GUI Executable
+        path: ./main
