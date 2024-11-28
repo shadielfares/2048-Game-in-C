@@ -44,7 +44,7 @@ Kurlan
     Details:
         Scoring Function: Implementing the scoring system, which includes the total score calculation during gameplay and a leaderboard.
         Build Workflow: Uploading the build, conducting tests, and generating a report (artifact build/gcov).
-
+	(UPDATE) Completed sliding tiles function
 Akshayan
 
     Main Tasks: Loading Random Tiles on Game Start, Test Cases
@@ -58,20 +58,22 @@ Shadi
 
     Main Tasks: Sliding Tiles Method, Combining Tiles Method
     Details:
-        Sliding Tiles Method: Implementing the logic to move tiles in the grid.
+        Sliding Tiles Method: Implementing the logic to move tiles in the grid. (UPDATE: Done by Kurlan)
         Combining Tiles Method: Developing functionality to read grid values and combine tiles according to game rules.
 
 Increments:
 
-Phase 1: Core Mechanics and Basic Game Setup - Due Date: Nov. 19
+Phase 1: Core Mechanics and Basic Game Setup - Due Date: Nov. 19 (UPDATE: Nov 28)
 
-    Game Loop Implementation (Aiden): Set up the while loop to manage the game state (ongoing, game over, or win).
-    Loading Random Tiles (Akshayan): Implement the method for initializing the game with random tiles.
-    Sliding Tiles Method (Shadi): Develop the logic for moving tiles within the grid.
+    Game Loop Implementation (Aiden): Set up the while loop to manage the game state (ongoing, game over, or win). (Done)
+    Loading Random Tiles (Akshayan): Implement the method for initializing the game with random tiles. (Done)
+    Sliding Tiles Method (Shadi): Develop the logic for moving tiles within the grid. (UPDATE: Done by Kurlan)
+    
+    (UPDATE) Added combining tiles finished (Shadi), Completed GUI (Aiden), Temp Workflow (Aiden), Help flag (Aiden)
 
 Phase 2: Game Logic Enhancements - Due Date: Nov. 24
 
-    Combining Tiles Method (Shadi): Implement the logic for reading and combining grid values according to game rules.
+    Combining Tiles Method (Shadi): Implement the logic for reading and combining grid values according to game rules. (UPDATE: Done)
     Scoring Function (Kurlan): Integrate the scoring system to calculate points and track the leaderboard.
 
 Phase 3: Testing and Build Workflow - Due Date: Nov. 29
@@ -81,6 +83,6 @@ Phase 3: Testing and Build Workflow - Due Date: Nov. 29
 
 Phase 4: User Interface and Final Touches - Due Date: Dec. 4
 
-    GUI Development (Aiden): Create the graphical user interface using GTK.
-    Help Flag (Aiden): Develop the Bash help flag to provide user instructions and game descriptions.
+    GUI Development (Aiden): Create the graphical user interface using GTK. (UPDATE: Done)
+    Help Flag (Aiden): Develop the Bash help flag to provide user instructions and game descriptions. (UPDATE: Done)
     Full Build and Deployment (Kurlan): Finalize the build process and ensure all components are properly integrated.
