@@ -2,6 +2,7 @@
 #include "gui.h"
 #include "macros.h"
 #include "tile_generation.h"
+#include "merge.h"
 
 //----------------------- -------------------------------------------------------------
 // Program main entry point
