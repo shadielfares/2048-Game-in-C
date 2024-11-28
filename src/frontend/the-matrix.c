@@ -3,6 +3,7 @@
 #include "macros.h"
 #include "tile_generation.h"
 #include "merge.h"
+#include "slide.h"
 
 //----------------------- -------------------------------------------------------------
 // Program main entry point
