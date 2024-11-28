@@ -1,2 +1,2 @@
-the-matrix: raylib/src/the-matrix src/frontend/gui.c src/frontend/gui.h src/frontend/macros.h
+the-matrix: the-matrix.c gui.c gui.h macros.h
 	gcc -o raylib/src/the-matrix src/frontend/the-matrix.c src/frontend/gui.c src/frontend/gui.h src/frontend/macros.h -lraylib -lGL -lm -lpthread -ldl -lrt -lX11; sudo ldconfig;
