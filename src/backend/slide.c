@@ -8,7 +8,7 @@ void slideRight(int new_array[ROWS][COLS], int k){
 
 	for(int r = 0; r < ROWS; r++){
 		for(int c = k; c < COLS; c++){
-			slideRight(array, c + 1);
+			slideRight(new_array, c + 1);
 			if(new_array[r][c + 1] == 0 && c != 3){
 				new_array[r][c + 1] = new_array[r][c];
 				new_array[r][c] = 0;
@@ -21,7 +21,7 @@ void slideLeft(int new_array[ROWS][COLS], int k){
 
         for(int r = 0; r < ROWS; r++){
                 for(int c = k; c < COLS; c++){
-			slideLeft(array, c + 1);
+			slideLeft(new_array, c + 1);
                         if(new_array[r][c] == 0 && c != 3){
                                 new_array[r][c] = new_array[r][c + 1];
                         	new_array[r][c + 1] = 0;
@@ -35,7 +35,7 @@ void slideUp(int new_array[ROWS][COLS], int k){
 
         for(int c = 0; c < COLS; c++){
                 for(int r = k; r < ROWS; r++){
-                        slideUp(array, r + 1);
+                        slideUp(new_array, r + 1);
                         if(new_array[r][c] == 0 && r != 3){
                                 new_array[r][c] = new_array[r + 1][c];
                                 new_array[r + 1][c] = 0;
@@ -48,7 +48,7 @@ void slideDown(int new_array[ROWS][COLS], int k){
 
         for(int c = 0; c < COLS; c++){
                 for(int r = k; r < ROWS; r++){
-                        slideDown(array, r + 1);
+                        slideDown(new_array, r + 1);
                         if(new_array[r + 1][c] == 0 && r != 3){
                                 new_array[r + 1][c] = new_array[r][c];
                                 new_array[r][c] = 0;
@@ -67,6 +67,5 @@ void slide(int array[ROWS][COLS], int direction){
 	} else if(direction == 4){
 		slideDown(array, 0);
 	}
-
 
 }
