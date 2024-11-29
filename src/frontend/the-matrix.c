@@ -1,9 +1,11 @@
 #include "raylib.h"
-#include "gui.h"
-#include "macros.h"
-#include "tile_generation.h"
-#include "merge.h"
-#include "slide.h"
+#include <string.h>
+#include <stdio.h>
+#include "../../include/gui.h"
+#include "../../include/macros.h"
+#include "../../include/tile_generation.h"
+#include "../../include/merge.h"
+#include "../../include/slide.h"
 
 //----------------------- -------------------------------------------------------------
 // Program main entry point

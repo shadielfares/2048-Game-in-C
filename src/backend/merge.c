@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "macros.h"
+#include "../../include/macros.h"
 
 int testGrid[gridRows][gridCols] = { {2,4,0,0}, {2,4,16,16}, {2,0,0,0}, {2,0,0,0} };
 
