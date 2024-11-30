@@ -69,22 +69,26 @@ int main(int argc, char *argv[])
 	    	if (IsKeyPressed(KEY_RIGHT)) {
                 	printf("Right");
 			slideRight(grid, 0);
-            		//addRandomTile(grid);
+            merge(grid,1);
+			slideRight(grid, 0);
 	    	}
             	else if (IsKeyPressed(KEY_DOWN)) {
                 	printf("Down");
 			slideDown(grid, 0);
-            		//addRandomTile(grid);
+            merge(grid,4);
+			slideRight(grid, 0);
 	    	}
             	else if (IsKeyPressed(KEY_LEFT)) {
                 	printf("Left");
 			slideLeft(grid, 0);
-            		//addRandomTile(grid);
+            merge(grid,2);
+			slideRight(grid, 0);
 	    	}
             	else if (IsKeyPressed(KEY_UP)) {
                 	printf("Up");
 			slideUp(grid, 0);
-            		//addRandomTile(grid);
+            merge(grid,3);
+			slideRight(grid, 0);
 	    	} else {
 	    		continue;
 	    	}
@@ -102,9 +106,5 @@ int main(int argc, char *argv[])
         //--------------------------------------------------------------------------------------
 
         return 0;
-
-
-
     }
-    
 }
