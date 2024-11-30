@@ -51,6 +51,7 @@ int main(int argc, char *argv[])
 
         initializeGrid(grid);
 	addRandomTile(grid);
+	addRandomTile(grid);
 
         InitWindow(screenWidth, screenHeight, "The Matrix");
 
@@ -61,37 +62,34 @@ int main(int argc, char *argv[])
         while (!WindowShouldClose())    // Detect window close button or ESC key
         {
             //int oldGrid[gridRows][gridCols] = grid;
-	    addRandomTile(grid);
             
-	    display2048GUI(screenHeight, screenWidth, gameHeight, gameWidth, tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid);
+		display2048GUI(screenHeight, screenWidth, gameHeight, gameWidth, tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid);
 
-	    bool done = false;
-	    while(!done){	
+	   
 	    	if (IsKeyPressed(KEY_RIGHT)) {
                 	printf("Right");
 			slideRight(grid, 0);
             		//addRandomTile(grid);
-			done = true;
 	    	}
             	else if (IsKeyPressed(KEY_DOWN)) {
                 	printf("Down");
 			slideDown(grid, 0);
             		//addRandomTile(grid);
-			done = true;
 	    	}
             	else if (IsKeyPressed(KEY_LEFT)) {
                 	printf("Left");
 			slideLeft(grid, 0);
             		//addRandomTile(grid);
-			done = true;
 	    	}
             	else if (IsKeyPressed(KEY_UP)) {
                 	printf("Up");
 			slideUp(grid, 0);
             		//addRandomTile(grid);
-			done = true;
+	    	} else {
+	    		continue;
 	    	}
-	    }
+	   	
+		addRandomTile(grid);
 
             display2048GUI(screenHeight, screenWidth, gameHeight, gameWidth, tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid);
 
