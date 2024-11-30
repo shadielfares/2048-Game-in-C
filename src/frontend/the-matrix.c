@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 
     if (argc >= 2 && strcmp(argv[1], "--help") == 0) {
 
-        printf("----Welcome to The Matrix----");
+        printf("----Welcome to The Matrix----\n");
         printf("1. Use arrow keys to shift tiles\n");
         printf("2. Merge blocks to get the largest number possible\n");
         printf("3. Try to get to a score of 2048!\n");
@@ -46,12 +46,9 @@ int main(int argc, char *argv[])
         const int tileHeight = (int)((double)(gameHeight - border * 2) / (double)gridRows - (double)(2 * tilePadding));
 
 
-        int grid[gridRows][gridCols] = { {4, 8, 16, 32},
-            {64, 128, 256, 512},
-            {1024, 2048, 3, 9},
-            {7, 5, 1, 0} };
+        int grid[gridRows][gridCols];
 
-        //initializeGrid(grid);
+        initializeGrid(grid);
 
         InitWindow(screenWidth, screenHeight, "The Matrix");
 
@@ -82,17 +79,6 @@ int main(int argc, char *argv[])
             }
 
             display2048GUI(screenHeight, screenWidth, gameHeight, gameWidth, tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid);
-            
-
-            /*for (int row = 0; row < gridRows; row++) {
-                for (int col = 0; col < gridCols; col++) {
-
-                    if (oldGrid[row][col] == grid[row][col]) {
-
-                    }
-
-                }
-            }*/
 
 
         }
