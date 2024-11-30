@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "../../include/macros.h"
 
-//int testGrid[gridRows][gridCols] = { {0,0,0,0}, {2,0,0,0}, {2,0,0,0}, {2,0,0,0} };
+//int testGrid[gridRows][gridCols] = { {16,0,0,0}, {8,0,0,0}, {4,0,0,0}, {4,0,0,0} };
 
 /*
  * Params: 2D Array
@@ -146,8 +146,6 @@ void mergeColumn(int matrix[gridRows][gridCols], int column[gridCols], int index
         }
 }
 
-// 4222
-
 /*
  * Params: 2D Array, String Direction
  * Return: Depends on Direction
@@ -176,7 +174,6 @@ void merge(int matrix[gridRows][gridCols], int direction){
         int columnArr[gridCols];
         for (int i = 0; i < gridCols; i++){
             getColumn(matrix, i, columnArr);
-            mergeUp(columnArr);
             mergeColumn(matrix, mergeUp(columnArr), i);
         }
     }
