@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "../../include/macros.h"
 
-int testGrid[gridRows][gridCols] = { {2,4,0,0}, {2,4,16,16}, {2,0,0,0}, {2,0,0,0} };
+//int testGrid[gridRows][gridCols] = { {0,0,0,0}, {2,0,0,0}, {2,0,0,0}, {2,0,0,0} };
 
 /*
  * Params: 2D Array
@@ -110,14 +110,14 @@ int *mergeLeft(int *row){
 /*
  * Params: Point to Array of Ints (Row)
  * Return: Pointer to Array of Ints (Merged Column)
- * Checks RIGHT to LEFT
+ * Checks LEFT to RIGHT
  */
 
 int *mergeUp(int *column){
-    for (int i = (gridCols-1); i > 0; i--){
-        if (column[i-1] == column[i]){
-            column[i-1] += column[i];
-            column[i] = 0;
+    for (int i = 0; i < gridCols; i++){
+        if (column[i] == column[i+1]){
+            column[i] += column[i+1];
+            column[i+1] = 0;
         }
     }
     return column;
@@ -126,14 +126,14 @@ int *mergeUp(int *column){
 /*
  * Params: Point to Array of Ints (Row)
  * Return: Pointer to Array of Ints (Merged Column Down)
- * Checks Right to Left
+ * Checks RIGHT to LEFT
  */
 
 int *mergeDown(int *column){
-    for (int i = 0; i < gridCols; i++){
-        if (column[i+1] == column[i]){
-            column[i+1] += column[i];
-            column[i] = 0;
+    for (int i = (gridCols -1); i > 0; i--){
+        if (column[i-1] == column[i]){
+            column[i] += column[i-1];
+            column[i-1] = 0;
         }
     }
     return column;
@@ -191,23 +191,11 @@ void merge(int matrix[gridRows][gridCols], int direction){
 }
 
 //int main(){
-    //printArray(testGrid);
-    //int *row1 = getRow(testGrid, 0);
-    //int *row2 = getRow(testGrid, 1);
-
-    //printf("\nMERGING LEFT\n");
-    //mergeLeft(row1);
-    //printRow(row1);
-
-    //printf("\nMERGING RIGHT\n");
-    //mergeRight(row2);
-    //printRow(row2);
-
-    //printf("\nGRID PRE ACTION\n");
-    //printArray(testGrid);
-
-    //printf("\nPRINTING gridCols MERGED DOWN\n");
-    //merge(testGrid, 2);
-    //printArray(testGrid);
-    //return 0;
+//    printf("\nGRID PRE ACTION\n");
+//    printArray(testGrid);
+//
+//    printf("\nPRINTING gridCols MERGED DOWN\n");
+//    merge(testGrid, 3);
+//    printArray(testGrid);
+//    return 0;
 //}
