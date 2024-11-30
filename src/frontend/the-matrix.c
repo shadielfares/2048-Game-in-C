@@ -62,7 +62,10 @@ int main(int argc, char *argv[])
         {
             //int oldGrid[gridRows][gridCols] = grid;
 	    addRandomTile(grid);
-            bool done = false;
+            
+	    display2048GUI(screenHeight, screenWidth, gameHeight, gameWidth, tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid);
+
+	    bool done = false;
 	    while(!done){	
 	    	if (IsKeyPressed(KEY_RIGHT)) {
                 	printf("Right");
