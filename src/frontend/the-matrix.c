@@ -59,25 +59,28 @@ int main(int argc, char *argv[])
         // Main game loop
         while (!WindowShouldClose())    // Detect window close button or ESC key
         {
-	    addRandomTile(grid);
             //int oldGrid[gridRows][gridCols] = grid;
 
             if (IsKeyPressed(KEY_RIGHT)) {
                 printf("Right");
 		slideRight(grid, 0);
-            }
+            	addRandomTile(grid);
+	    }
             else if (IsKeyPressed(KEY_DOWN)) {
                 printf("Down");
 		slideDown(grid, 0);
-            }
+            	addRandomTile(grid);
+	    }
             else if (IsKeyPressed(KEY_LEFT)) {
                 printf("Left");
 		slideLeft(grid, 0);
-            }
+            	addRandomTile(grid);
+	    }
             else if (IsKeyPressed(KEY_UP)) {
                 printf("Up");
 		slideUp(grid, 0);
-            }
+            	addRandomTile(grid);
+	    }
 		
 	    
             display2048GUI(screenHeight, screenWidth, gameHeight, gameWidth, tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid);
