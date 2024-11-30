@@ -1,0 +1,88 @@
+Title of the Project: The Matrix
+
+High Level Description:
+a) 2048 is a single player game, in a 4x4 grid where you add up adjacent tiles. The user interacts with the app via a GUI.
+b) The context in which the app will be used is for entertainment purposes / leisure.
+c) Constraints:`
+1. The game will be played on a 4x4 grid, with the user having to slide the tiles in the grid to combine them.
+2. The game will end when the grid is full and no more moves can be made or the game will end when you have a single block with a value of 2048 on your grid. 
+3. The user will have the option to restart the game.
+
+Type of App: Game (in C)
+
+Team Members: 
+Akshayan Thuvarakan
+Kurlan Beeharry
+Aiden Sanvido
+Shadi El-Fares
+
+Student Numbers:
+Aiden:400501212
+Kurlan:400521584
+Shadi:400525799
+Akshayan: 400506559
+
+Github Ids:
+KurlanB
+akshayan-t
+shadielfares
+aidensanvid
+
+Roles and Details of Each Role Title:
+
+Aiden
+
+    Main Tasks: Game Over/Winning Condition, GUI, Help Flag (in Bash)
+    Details:
+        Game Loop: Implementing a while loop to check for game over or win conditions.
+        GUI: Using GTK to create the graphical user interface for the game.
+        Help Flag: Creating a help flag in Bash to describe the game and provide user guidance.
+
+Kurlan
+
+    Main Tasks: Scoring, Build Workflow (build.yml)
+    Details:
+        Scoring Function: Implementing the scoring system, which includes the total score calculation during gameplay and a leaderboard.
+        Build Workflow: Uploading the build, conducting tests, and generating a report (artifact build/gcov).
+	(UPDATE) Completed sliding tiles function
+Akshayan
+
+    Main Tasks: Loading Random Tiles on Game Start, Test Cases
+    Details:
+        Loading Random Tiles: Implementing the method to load random tiles when the game starts.
+        Test Cases:
+            Developing test cases for the combining tiles method, including grids with predefined spots and expected outputs.
+            Developing test cases for the sliding tiles method, with predefined grid states and corresponding expected results.
+
+Shadi
+
+    Main Tasks: Sliding Tiles Method, Combining Tiles Method
+    Details:
+        Sliding Tiles Method: Implementing the logic to move tiles in the grid. (UPDATE: Done by Kurlan)
+        Combining Tiles Method: Developing functionality to read grid values and combine tiles according to game rules.
+
+Increments:
+
+Phase 1: Core Mechanics and Basic Game Setup - Due Date: Nov. 19 (UPDATE: Nov 28)
+
+    Game Loop Implementation (Aiden): Set up the while loop to manage the game state (ongoing, game over, or win). (Done)
+    Loading Random Tiles (Akshayan): Implement the method for initializing the game with random tiles. (Done)
+    Sliding Tiles Method (Shadi): Develop the logic for moving tiles within the grid. (UPDATE: Done by Kurlan)
+    
+    (UPDATE) Added combining tiles finished (Shadi), Completed GUI (Aiden), Temp Workflow (Aiden), Help flag (Aiden)
+
+Phase 2: Game Logic Enhancements - Due Date: Nov. 24
+
+    Combining Tiles Method (Shadi): Implement the logic for reading and combining grid values according to game rules. (UPDATE: Done)
+    Scoring Function (Kurlan): Integrate the scoring system to calculate points and track the leaderboard.
+
+Phase 3: Testing and Build Workflow - Due Date: Nov. 29
+
+    Test Cases (Akshayan): Create and implement test cases for both the combining and sliding tiles methods.
+    Build Workflow Setup (Kurlan): Set up the build.yml file to run tests and generate reports for code coverage.
+
+Phase 4: User Interface and Final Touches - Due Date: Dec. 4
+
+    GUI Development (Aiden): Create the graphical user interface using GTK. (UPDATE: Done)
+    Help Flag (Aiden): Develop the Bash help flag to provide user instructions and game descriptions. (UPDATE: Done)
+    Full Build and Deployment (Kurlan): Finalize the build process and ensure all components are properly integrated.
