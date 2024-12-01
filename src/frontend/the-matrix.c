@@ -26,10 +26,13 @@ int main(int argc, char *argv[])
     }
 
     else {
-
+	    const int screenWidth = 800;
+	    const int screenHeight = 900;
+	    InitWindow(screenWidth, screenHeight, "The Matrix");
+	    gamePlay(screenWidth, screenHeight);
         // Initialization
     //-------------------------------------------------------------------------------------
-
+/*
         const int screenWidth = 800;
         const int screenHeight = 900;
 
@@ -135,12 +138,12 @@ int main(int argc, char *argv[])
 			done = true;
 		}
 	}
-
+	*/
         // De-Initialization
         //--------------------------------------------------------------------------------------
-        CloseWindow();        // Close window and OpenGL context
+        //CloseWindow();        // Close window and OpenGL context
         //--------------------------------------------------------------------------------------
 
-        return 0;
+        //return 0;
     }
 }

@@ -1,8 +1,14 @@
 #include "raylib.h"
 #include <string.h>
 #include <stdio.h>
+#include <stdbool.h>
+#include <unistd.h>
 #include "../../include/macros.h"
 #include "../../include/merge.h"
+#include "../../include/gui.h"
+#include "../../include/macros.h"
+#include "../../include/tile_generation.h"
+#include "../../include/slide.h"
 
 #define BACKGROUND (Color){188, 172, 159, 255}
 #define EMPTY_TILE (Color){204, 193, 180, 255}
@@ -70,12 +76,11 @@ void displayText(char * string, int x, int y, Color c) {
     }
 }
 
-void display2048GUI(const int screenHeight, const int screenWidth, const int gameHeight, const int gameWidth, const int tilePadding, const int border, const int tileWidth, const int tileHeight, const int fontAdjustX, const int fontAdjustY, const int fontSize, int grid[gridRows][gridCols]) {
+void display2048GUI(const int screenHeight, const int screenWidth, const int gameHeight, const int gameWidth, const int tilePadding, const int border, const int tileWidth, const int tileHeight, const int fontAdjustX, const int fontAdjustY, const int fontSize, int grid[gridRows][gridCols], int scoreNum) {
 
     char string[10];
     char score[100];
-
-    int scoreNum = getScore();
+    
     BeginDrawing();
 
     ClearBackground(BACKGROUND);
@@ -160,4 +165,147 @@ void display2048GUI(const int screenHeight, const int screenWidth, const int gam
 
 
     EndDrawing();
+}
+
+void gamePlay(const int screenWidth, const int screenHeight){
+        //const int screenWidth = 800;
+        //const int screenHeight = 900;
+
+        const int gameWidth = screenWidth;
+        const int gameHeight = 800;
+
+        const int fontSize = 50;
+        const int fontAdjustX = -13;
+        const int fontAdjustY = -20;
+
+        // Defined as the padding on one side of the tile/border on one side of the screen
+        const int border = 10;
+        const int tilePadding = 10;
+
+        const int tileWidth = (int)((double)(gameWidth - border * 2) / (double)gridCols - (double)(2 * tilePadding));
+        const int tileHeight = (int)((double)(gameHeight - border * 2) / (double)gridRows - (double)(2 * tilePadding));
+
+
+        int grid[gridRows][gridCols];
+	bool done = false;
+	int score = 0;
+
+        initializeGrid(grid);
+	addRandomTile(grid);
+	addRandomTile(grid);
+
+        //InitWindow(screenWidth, screenHeight, "The Matrix");
+
+        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+        //--------------------------------------------------------------------------------------
+
+        // Main game loop
+        while (!WindowShouldClose() && !done)    // Detect window close button or ESC key
+        {
+            	int oldGrid[gridRows][gridCols];
+            
+		for(int r = 0; r < gridRows; r++){
+			for(int c = 0; c < gridCols; c++){
+				oldGrid[r][c] = grid[r][c];
+			}
+		}
+		display2048GUI(screenHeight, screenWidth, gameHeight, gameWidth, tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid, score);
+
+	   	
+	    	if (IsKeyPressed(KEY_RIGHT)) {
+			slideRight(grid, 0);
+            		merge(grid,1);
+			slideRight(grid, 0);
+	    	}
+            	else if (IsKeyPressed(KEY_DOWN)) {	
+			slideDown(grid, 0);
+            		merge(grid,4);
+			slideDown(grid, 0);
+	    	}
+            	else if (IsKeyPressed(KEY_LEFT)) {
+			slideLeft(grid, 0);
+            		merge(grid,2);
+			slideLeft(grid, 0);
+	    	}
+            	else if (IsKeyPressed(KEY_UP)) {
+			slideUp(grid, 0);
+            		merge(grid,3);
+			slideUp(grid, 0);
+	    	} else {
+	    		continue;
+	    	}
+
+		score = getScore();
+	
+		bool movement = false;
+		bool fullTiles = true;
+
+		for(int r = 0; r < gridRows; r++){
+			for(int c = 0; c < gridCols; c++){
+				if(oldGrid[r][c] != grid[r][c]){
+					movement = true;
+				}
+				
+				if(grid[r][c] == 2048){	
+				        done = true;
+			        }	       
+			}
+		}
+		
+		if(movement){
+			addRandomTile(grid);
+		}
+
+		for(int r = 0; r < gridRows; r++){
+                        for(int c = 0; c < gridCols; c++){
+				if(grid[r][c] == 0){
+                                        fullTiles = false;
+                                }	
+			}
+		}
+
+            display2048GUI(screenHeight, screenWidth, gameHeight, gameWidth, tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid, score);
+	
+		if(!fullTiles){
+			continue;
+		} else {
+			done = true;
+		}
+	}
+	win(score);
+}
+
+void win(int score){
+	const int screenWidth = 800;
+	const int screenHeight = 900;
+
+	while(!WindowShouldClose() && !IsKeyPressed(KEY_R)){
+		const char* text1 = "You Lost :(";
+		const int fontSize1 = 80;
+		const char* text2 = "Press 'R' To Play Again";
+		const char* text3 = TextFormat("Final Score: %d", score);
+		const int fontSize3 = 40;
+		const int fontSize2 = 45;
+	
+		const int x1 = (800 - MeasureText(text1, fontSize1)) * 0.5f;
+		const int x2 = (800 - MeasureText(text2, fontSize2)) * 0.5f;
+		const int x3 = (800 - MeasureText(text3, fontSize3)) * 0.5f;
+
+		BeginDrawing();
+		{
+			ClearBackground(RAYWHITE);
+			DrawText(text1, x1, 250, fontSize1, BLACK);
+			DrawText(text3, x3, 400, fontSize3, GRAY);
+			DrawText(text2, x2, 450, fontSize2, BLACK);
+			
+		}
+		EndDrawing();
+	}
+
+	if (IsKeyPressed(KEY_R))
+        {
+        	gamePlay(screenWidth, screenHeight);
+        } else {
+		CloseWindow();
+	}
 }
