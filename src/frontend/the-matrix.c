@@ -99,8 +99,6 @@ int main(int argc, char *argv[])
 	    	} else {
 	    		continue;
 	    	}
-	   	
-		sleep(2);
 
 		bool movement = false;
 		bool fullTiles = true;
@@ -123,12 +121,13 @@ int main(int argc, char *argv[])
 
             display2048GUI(screenHeight, screenWidth, gameHeight, gameWidth, tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid);
 	
+	    	sleep(1);
 		if(!fullTiles){
 			continue;
 		}
 
 		done = true;
-	
+		
 	}
 
         // De-Initialization
