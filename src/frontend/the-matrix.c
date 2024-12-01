@@ -109,9 +109,14 @@ int main(int argc, char *argv[])
 					movement = true;
 					break;
 				}
+				
 				if(grid[r][c] == 0){
 					fullTiles = false;
 				}
+			        
+				if(grid[r][c] == 2048){	
+				        done = true;
+			        }	       
 			}
 		}
 		
@@ -121,7 +126,6 @@ int main(int argc, char *argv[])
 
             display2048GUI(screenHeight, screenWidth, gameHeight, gameWidth, tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid);
 	
-	    	usleep(500000);
 		if(!fullTiles){
 			continue;
 		}
