@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
             
 		for(int r = 0; r < gridRows; r++){
 			for(int c = 0; c < gridCols; c++){
-				oldgrid[r][c] = grid[r][c];
+				oldGrid[r][c] = grid[r][c];
 			}
 		}
 		display2048GUI(screenHeight, screenWidth, gameHeight, gameWidth, tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid);
@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
 
 		for(int r = 0; r < gridRows; r++){
 			for(int c = 0; c < gridCols; c++){
-				if(oldgrid[r][c] != grid[r][c]){
+				if(oldGrid[r][c] != grid[r][c]){
 					movement = true;
 					break;
 				}
