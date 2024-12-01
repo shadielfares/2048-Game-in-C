@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include "../../include/macros.h"
 
-int testGrid[gridRows][gridCols] = { {16,8,2,4}, {4,0,0,0}, {0,0,0,0}, {0,0,0,0} };
-int testGrid2[gridRows][gridCols] = { {4,2,8,16}, {0,0,0,4}, {0,0,0,0}, {0,0,0,0} };
+//int testGrid[gridRows][gridCols] = { {16,8,2,4}, {4,0,0,0}, {0,0,0,0}, {0,0,0,0} };
 
 /*
  * Params: 2D Array
@@ -189,12 +188,12 @@ void merge(int matrix[gridRows][gridCols], int direction){
     }
 }
 
-int main(){
-    printf("\nGRID PRE ACTION\n");
-    printArray(testGrid);
-
-    printf("\nPRINTING gridCols MERGED DOWN\n");
-    merge(testGrid, 1);
-    printArray(testGrid);
-    return 0;
-}
+//int main(){
+//    printf("\nGRID PRE ACTION\n");
+//    printArray(testGrid);
+//
+//    printf("\nPRINTING gridCols MERGED DOWN\n");
+//    merge(testGrid, 1);
+//    printArray(testGrid);
+//    return 0;
+//}
