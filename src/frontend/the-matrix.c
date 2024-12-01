@@ -109,10 +109,6 @@ int main(int argc, char *argv[])
 					movement = true;
 				}
 				
-				if(grid[r][c] == 0){
-					fullTiles = false;
-				}
-			        
 				if(grid[r][c] == 2048){	
 				        done = true;
 			        }	       
@@ -121,6 +117,14 @@ int main(int argc, char *argv[])
 		
 		if(movement){
 			addRandomTile(grid);
+		}
+
+		for(int r = 0; r < gridRows; r++){
+                        for(int c = 0; c < gridCols; c++){
+				if(grid[r][c] == 0){
+                                        fullTiles = false;
+                                }	
+			}
 		}
 
             display2048GUI(screenHeight, screenWidth, gameHeight, gameWidth, tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid);
