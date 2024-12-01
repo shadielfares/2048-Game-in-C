@@ -79,7 +79,7 @@ void display2048GUI(const int screenHeight, const int screenWidth, const int gam
 
     char string[10];
     char score[100];
-
+    int scoreNum = sumScore();
     BeginDrawing();
 
     ClearBackground(BACKGROUND);
@@ -90,7 +90,7 @@ void display2048GUI(const int screenHeight, const int screenWidth, const int gam
     for (int row = 0; row < gridRows; row++) {
         for (int col = 0; col < gridCols; col++) {
 
-            sprintf(score, "Score: %d", sumScore());
+            sprintf(score, "Score: %d", scoreNum);
 
             int centerX = screenWidth - 400 + fontAdjustX * strlen(score);
             int centerY = 36;
