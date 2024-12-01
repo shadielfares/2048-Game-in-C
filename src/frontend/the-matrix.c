@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <unistd.h>
 #include "../../include/gui.h"
 #include "../../include/macros.h"
 #include "../../include/tile_generation.h"
@@ -99,6 +100,8 @@ int main(int argc, char *argv[])
 	    		continue;
 	    	}
 	   	
+		sleep(2);
+
 		bool movement = false;
 		bool fullTiles = true;
 
