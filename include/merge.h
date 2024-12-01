@@ -1,3 +1,4 @@
 #include "macros.h"
 void merge(int matrix[gridRows][gridCols], int direction);
-int sumScore(int number);
+void sumScore(int number);
+int getScore();

@@ -67,19 +67,15 @@ void displayText(char * string, int x, int y, Color c) {
             currentX += 5 + lineThickness * 2;
 
         }
-        
-        
-        
-
     }
-
 }
 
 void display2048GUI(const int screenHeight, const int screenWidth, const int gameHeight, const int gameWidth, const int tilePadding, const int border, const int tileWidth, const int tileHeight, const int fontAdjustX, const int fontAdjustY, const int fontSize, int grid[gridRows][gridCols]) {
 
     char string[10];
     char score[100];
-    int scoreNum = sumScore();
+
+    int scoreNum = getScore();
     BeginDrawing();
 
     ClearBackground(BACKGROUND);

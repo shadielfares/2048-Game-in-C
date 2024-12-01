@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include "../../include/macros.h"
 
-//int testGrid[gridRows][gridCols] = { {16,8,2,4}, {4,0,0,0}, {0,0,0,0}, {0,0,0,0} };
+//int testGrid[gridRows][gridCols] = { {16,8,2,2}, {4,4,0,0}, {0,0,0,0}, {0,0,0,0} };
 
 /*
  * Params: 2D Array
  * Return: Void
  */
+
+static int score = 0;
 
 void printArray(int matrix[gridRows][gridCols]){
 
@@ -23,12 +25,14 @@ void printArray(int matrix[gridRows][gridCols]){
  * Return: Sum of number
  */
 
-int sumScore(int number){
-    int score = 0;
-    score += number;
-    return score;
+void sumScore(int number){
+    int *ptr = &score;
+    *ptr += 2*number;
 }
 
+int getScore(){
+    return score;
+}
 /*
  * Params: 2D Array
  * Return: Single Row at specified index
@@ -176,11 +180,14 @@ void merge(int matrix[gridRows][gridCols], int direction){
 }
 
 //int main(){
+//    printf("PRE MERGE: %d\n", getScore());
 //    printf("\nGRID PRE ACTION\n");
 //    printArray(testGrid);
 //
 //    printf("\nPRINTING gridCols MERGED DOWN\n");
-//    merge(testGrid, 1);
+//    merge(testGrid, 2);
 //    printArray(testGrid);
+//
+//    printf("POST MERGE: %d\n", getScore());
 //    return 0;
 //}
