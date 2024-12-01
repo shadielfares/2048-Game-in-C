@@ -8,7 +8,7 @@
  * Return: Void
  */
 
-static int score = 0;
+//static int score = 0;
 
 void printArray(int matrix[gridRows][gridCols]){
 
@@ -25,14 +25,6 @@ void printArray(int matrix[gridRows][gridCols]){
  * Return: Sum of number
  */
 
-void sumScore(int number){
-    int *ptr = &score;
-    *ptr += 2*number;
-}
-
-int getScore(){
-    return score;
-}
 /*
  * Params: 2D Array
  * Return: Single Row at specified index
@@ -69,11 +61,11 @@ void getColumn(int matrix[gridRows][gridCols], int index, int column[gridCols]){
  * Checks RIGHT to LEFT
  */
 
-int *mergeRight(int *row){
+int *mergeRight(int *row, int *score){
     for (int i = (gridRows-1); i > 0; i--){
         if (row[i] == row[i-1]){
             row[i] += row[i-1];
-            sumScore(row[i-1]);
+            *score += 2 * row[i-1];
             row[i-1] = 0;
         }
     }
@@ -86,11 +78,11 @@ int *mergeRight(int *row){
  * Checks LEFT to RIGHT 
  */
 
-int *mergeLeft(int *row){
+int *mergeLeft(int *row, int *score){
     for (int i = 0; i < gridRows-1; i++){
         if (row[i+1] == row[i]){
             row[i] += row[i+1];
-            sumScore(row[i+1]);
+            *score += 2 * row[i+1];
             row[i+1] = 0;
         }
     }
@@ -103,11 +95,11 @@ int *mergeLeft(int *row){
  * Checks LEFT to RIGHT
  */
 
-int *mergeUp(int *column){
+int *mergeUp(int *column, int *score){
     for (int i = 0; i < gridCols; i++){
         if (column[i] == column[i+1]){
             column[i] += column[i+1];
-            sumScore(column[i+1]);
+            *score += 2 * column[i+1];
             column[i+1] = 0;
         }
     }
@@ -120,11 +112,11 @@ int *mergeUp(int *column){
  * Checks RIGHT to LEFT
  */
 
-int *mergeDown(int *column){
+int *mergeDown(int *column, int *score){
     for (int i = (gridCols -1); i > 0; i--){
         if (column[i-1] == column[i]){
             column[i] += column[i-1];
-            sumScore(column[i-1]);
+            *score += 2 * column[i-1];
             column[i-1] = 0;
         }
     }
@@ -143,7 +135,7 @@ void mergeColumn(int matrix[gridRows][gridCols], int column[gridCols], int index
  * Return: Depends on Direction
  */
 
-void merge(int matrix[gridRows][gridCols], int direction){
+void merge(int matrix[gridRows][gridCols], int direction, int *score){
     //Merging Right = 1
     //Merging Left = 2
     //Merging Up = 3
@@ -151,14 +143,14 @@ void merge(int matrix[gridRows][gridCols], int direction){
     if (direction == 1){
         for (int i = 0; i < gridRows; i++){
             int *row = getRow(matrix, i);
-            mergeRight(row);
+            mergeRight(row, score);
         }
     }
 
     if (direction == 2){
         for (int i = 0; i < gridRows; i++){
             int *row = getRow(matrix, i);
-            mergeLeft(row);
+            mergeLeft(row, score);
         }
     }
 
@@ -166,7 +158,7 @@ void merge(int matrix[gridRows][gridCols], int direction){
         int columnArr[gridCols];
         for (int i = 0; i < gridCols; i++){
             getColumn(matrix, i, columnArr);
-            mergeColumn(matrix, mergeUp(columnArr), i);
+            mergeColumn(matrix, mergeUp(columnArr, score), i);
         }
     }
 
@@ -174,7 +166,7 @@ void merge(int matrix[gridRows][gridCols], int direction){
         int columnArr[gridCols];
         for (int i = 0; i < gridCols; i++){
             getColumn(matrix, i, columnArr);
-            mergeColumn(matrix, mergeDown(columnArr), i);
+            mergeColumn(matrix, mergeDown(columnArr, score), i);
         }
     }
 }

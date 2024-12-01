@@ -77,17 +77,17 @@ void displayText(char * string, int x, int y, Color c) {
 }
 
 void display2048GUI(const int screenHeight, const int screenWidth, const int gameHeight, const int gameWidth, const int tilePadding, const int border, const int tileWidth, const int tileHeight, const int fontAdjustX, const int fontAdjustY, const int fontSize, int grid[gridRows][gridCols], int scoreNum) {
-
+	
     char string[10];
     char score[100];
     
     BeginDrawing();
-
+    
     ClearBackground(BACKGROUND);
-
+    
     int currentX = tilePadding + border;
     int currentY = tilePadding + border + screenHeight - gameHeight;
-
+    
     for (int row = 0; row < gridRows; row++) {
         for (int col = 0; col < gridCols; col++) {
 
@@ -185,10 +185,10 @@ void gamePlay(const int screenWidth, const int screenHeight){
         const int tileWidth = (int)((double)(gameWidth - border * 2) / (double)gridCols - (double)(2 * tilePadding));
         const int tileHeight = (int)((double)(gameHeight - border * 2) / (double)gridRows - (double)(2 * tilePadding));
 
-
         int grid[gridRows][gridCols];
 	bool done = false;
-	int score = 0;
+	int initialScore = 0;
+	int *scoreNum = &initialScore;
 
         initializeGrid(grid);
 	addRandomTile(grid);
@@ -209,36 +209,35 @@ void gamePlay(const int screenWidth, const int screenHeight){
 				oldGrid[r][c] = grid[r][c];
 			}
 		}
-		display2048GUI(screenHeight, screenWidth, gameHeight, gameWidth, tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid, score);
+			
+		display2048GUI(screenHeight, screenWidth, gameHeight, gameWidth, tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid, *scoreNum);
 
-	   	
 	    	if (IsKeyPressed(KEY_RIGHT)) {
 			slideRight(grid, 0);
-            		merge(grid,1);
+            		merge(grid,1, scoreNum);
 			slideRight(grid, 0);
 	    	}
             	else if (IsKeyPressed(KEY_DOWN)) {	
 			slideDown(grid, 0);
-            		merge(grid,4);
+            		merge(grid,4, scoreNum);
 			slideDown(grid, 0);
 	    	}
             	else if (IsKeyPressed(KEY_LEFT)) {
 			slideLeft(grid, 0);
-            		merge(grid,2);
+            		merge(grid,2, scoreNum);
 			slideLeft(grid, 0);
 	    	}
             	else if (IsKeyPressed(KEY_UP)) {
 			slideUp(grid, 0);
-            		merge(grid,3);
+            		merge(grid,3, scoreNum);
 			slideUp(grid, 0);
 	    	} else {
 	    		continue;
 	    	}
-
-		score = getScore();
 	
 		bool movement = false;
 		bool fullTiles = true;
+		int isMerge = 0;
 
 		for(int r = 0; r < gridRows; r++){
 			for(int c = 0; c < gridCols; c++){
@@ -260,44 +259,57 @@ void gamePlay(const int screenWidth, const int screenHeight){
                         for(int c = 0; c < gridCols; c++){
 				if(grid[r][c] == 0){
                                         fullTiles = false;
-                                }	
+                                }
+				if(grid[r][c] != 0){
+					if(grid[r][c] == grid[r+1][c] && r != gridRows - 1){
+						isMerge++;
+					} else if(grid[r][c] == grid[r][c+1] && c != gridCols - 1){
+						isMerge++;
+					}
+				} else {
+					isMerge++;
+				}
 			}
 		}
 
-            display2048GUI(screenHeight, screenWidth, gameHeight, gameWidth, tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid, score);
+            display2048GUI(screenHeight, screenWidth, gameHeight, gameWidth, tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid, *scoreNum);
 	
-		if(!fullTiles){
+		if(!fullTiles || isMerge > 0){
 			continue;
 		} else {
 			done = true;
 		}
 	}
-	win(score);
+
+	win(*scoreNum);
 }
 
 void win(int score){
 	const int screenWidth = 800;
 	const int screenHeight = 900;
 
-	while(!WindowShouldClose() && !IsKeyPressed(KEY_R)){
+	while(!WindowShouldClose() && !IsKeyPressed(KEY_R) && !IsKeyPressed(KEY_Q)){
 		const char* text1 = "You Lost :(";
 		const int fontSize1 = 80;
 		const char* text2 = "Press 'R' To Play Again";
 		const char* text3 = TextFormat("Final Score: %d", score);
 		const int fontSize3 = 40;
 		const int fontSize2 = 45;
-	
+		const char* text4 = "Press 'Q' To Quit The Game";
+		const int fontSize4 = 30;
+
 		const int x1 = (800 - MeasureText(text1, fontSize1)) * 0.5f;
 		const int x2 = (800 - MeasureText(text2, fontSize2)) * 0.5f;
 		const int x3 = (800 - MeasureText(text3, fontSize3)) * 0.5f;
+		const int x4 = (800 - MeasureText(text4, fontSize4)) * 0.5f;
 
 		BeginDrawing();
 		{
-			ClearBackground(RAYWHITE);
-			DrawText(text1, x1, 250, fontSize1, BLACK);
-			DrawText(text3, x3, 400, fontSize3, GRAY);
-			DrawText(text2, x2, 450, fontSize2, BLACK);
-			
+			ClearBackground(TILE2);
+			DrawText(text1, x1, 50, fontSize1, DARKBROWNc);
+			DrawText(text3, x3, 150, fontSize3, BACKGROUND);
+			DrawText(text2, x2, 780, fontSize2, DARKBROWNc);
+			DrawText(text4, x4, 850, fontSize4, BACKGROUND);
 		}
 		EndDrawing();
 	}
@@ -305,7 +317,7 @@ void win(int score){
 	if (IsKeyPressed(KEY_R))
         {
         	gamePlay(screenWidth, screenHeight);
-        } else {
+        } else if(IsKeyPressed(KEY_Q)) {
 		CloseWindow();
-	}
+	} 
 }
