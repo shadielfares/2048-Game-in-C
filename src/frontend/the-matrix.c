@@ -107,7 +107,6 @@ int main(int argc, char *argv[])
 			for(int c = 0; c < gridCols; c++){
 				if(oldGrid[r][c] != grid[r][c]){
 					movement = true;
-					break;
 				}
 				
 				if(grid[r][c] == 0){
