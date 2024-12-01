@@ -62,8 +62,13 @@ int main(int argc, char *argv[])
         // Main game loop
         while (!WindowShouldClose() && !done)    // Detect window close button or ESC key
         {
-            	int oldGrid[gridRows][gridCols] = grid;
+            	int oldGrid[gridRows][gridCols];
             
+		for(int r = 0; r < gridRows; r++){
+			for(int c = 0; c < gridCols; c++){
+				oldgrid[r][c] = grid[r][c];
+			}
+		}
 		display2048GUI(screenHeight, screenWidth, gameHeight, gameWidth, tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid);
 
 	   	
@@ -97,8 +102,8 @@ int main(int argc, char *argv[])
 		bool movement = false;
 		bool fullTiles = true;
 
-		for(int r = 0; i < gridRows; i++){
-			for(int c = 0; i < gridCols; i++){
+		for(int r = 0; r < gridRows; r++){
+			for(int c = 0; c < gridCols; c++){
 				if(oldgrid[r][c] != grid[r][c]){
 					movement = true;
 					break;
