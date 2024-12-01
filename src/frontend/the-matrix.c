@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
 
             display2048GUI(screenHeight, screenWidth, gameHeight, gameWidth, tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid);
 	
-	    	usleep(500);
+	    	usleep(5000);
 		if(!fullTiles){
 			continue;
 		}
