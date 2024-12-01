@@ -100,7 +100,6 @@ int main(int argc, char *argv[])
 	    		continue;
 	    	}
 	
-		usleep(150 * 1000);
 		bool movement = false;
 		bool fullTiles = true;
 
@@ -121,7 +120,6 @@ int main(int argc, char *argv[])
 			}
 		}
 		
-		usleep(150 * 1000);
 		if(movement){
 			addRandomTile(grid);
 		}
@@ -130,10 +128,9 @@ int main(int argc, char *argv[])
 	
 		if(!fullTiles){
 			continue;
+		} else {
+			done = true;
 		}
-
-		done = true;
-		
 	}
 
         // De-Initialization
