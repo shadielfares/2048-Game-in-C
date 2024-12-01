@@ -31,7 +31,9 @@ void addRandomTile(int grid[gridRows][gridCols]) {
     }
 
     // If there are no empty cells, do nothing
-    if (emptyCells == 0) return;
+    if (emptyCells == 0) {
+	    return;
+    }
 
     // Choose a random empty cell
     int randomIndex = rand() % emptyCells;
