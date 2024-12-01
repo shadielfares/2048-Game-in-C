@@ -48,6 +48,7 @@ int main(int argc, char *argv[])
 
 
         int grid[gridRows][gridCols];
+	bool done = false;
 
         initializeGrid(grid);
 	addRandomTile(grid);
@@ -59,13 +60,13 @@ int main(int argc, char *argv[])
         //--------------------------------------------------------------------------------------
 
         // Main game loop
-        while (!WindowShouldClose())    // Detect window close button or ESC key
+        while (!WindowShouldClose() && !done)    // Detect window close button or ESC key
         {
-            //int oldGrid[gridRows][gridCols] = grid;
+            	int oldGrid[gridRows][gridCols] = grid;
             
 		display2048GUI(screenHeight, screenWidth, gameHeight, gameWidth, tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid);
 
-	   
+	   	
 	    	if (IsKeyPressed(KEY_RIGHT)) {
                 	printf("Right");
 			slideRight(grid, 0);
@@ -93,12 +94,34 @@ int main(int argc, char *argv[])
 	    		continue;
 	    	}
 	   	
-		addRandomTile(grid);
+		bool movement = false;
+		bool fullTiles = true;
+
+		for(int r = 0; i < gridRows; i++){
+			for(int c = 0; i < gridCols; i++){
+				if(oldgrid[r][c] != grid[r][c]){
+					movement = true;
+					break;
+				}
+				if(grid[r][c] == 0){
+					fullTiles = false;
+				}
+			}
+		}
+		
+		if(movement){
+			addRandomTile(grid);
+		}
 
             display2048GUI(screenHeight, screenWidth, gameHeight, gameWidth, tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid);
+	
+		if(!fullTiles){
+			continue;
+		}
 
-
-        }
+		done = true;
+	
+	}
 
         // De-Initialization
         //--------------------------------------------------------------------------------------
