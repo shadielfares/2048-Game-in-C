@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include "../../include/macros.h"
 
-//int testGrid[gridRows][gridCols] = { {16,0,0,0}, {8,0,0,0}, {4,0,0,0}, {4,0,0,0} };
+int testGrid[gridRows][gridCols] = { {16,8,2,4}, {4,0,0,0}, {0,0,0,0}, {0,0,0,0} };
+int testGrid2[gridRows][gridCols] = { {4,2,8,16}, {0,0,0,4}, {0,0,0,0}, {0,0,0,0} };
 
 /*
  * Params: 2D Array
@@ -98,7 +99,7 @@ int *mergeRight(int *row){
  */
 
 int *mergeLeft(int *row){
-    for (int i = 0; i < gridRows; i++){
+    for (int i = 0; i < gridRows-1; i++){
         if (row[i+1] == row[i]){
             row[i] += row[i+1];
             row[i+1] = 0;
@@ -156,6 +157,7 @@ void merge(int matrix[gridRows][gridCols], int direction){
     //Merging Left = 2
     //Merging Up = 3
     //Merging Down = 4
+    int *score = 0;
     if (direction == 1){
         for (int i = 0; i < gridRows; i++){
             int *row = getRow(matrix, i);
@@ -187,12 +189,12 @@ void merge(int matrix[gridRows][gridCols], int direction){
     }
 }
 
-//int main(){
-//    printf("\nGRID PRE ACTION\n");
-//    printArray(testGrid);
-//
-//    printf("\nPRINTING gridCols MERGED DOWN\n");
-//    merge(testGrid, 3);
-//    printArray(testGrid);
-//    return 0;
-//}
+int main(){
+    printf("\nGRID PRE ACTION\n");
+    printArray(testGrid);
+
+    printf("\nPRINTING gridCols MERGED DOWN\n");
+    merge(testGrid, 1);
+    printArray(testGrid);
+    return 0;
+}
