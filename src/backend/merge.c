@@ -18,31 +18,15 @@ void printArray(int matrix[gridRows][gridCols]){
     }
 }
 
-
 /*
- * Params: Pointer to Array of Ints
- * Return: Void
+ * Params: int number
+ * Return: Sum of number
  */
 
-void printRow(int *row){
-
-    for(int i = 0; i < gridCols; i++){
-        printf("%d", row[i]);
-    }
-    printf("\n");
-}
-
-/*
- * Params: Pointer to Array of Ints
- * Return: Void
- */
-
-void printColumn(int *column){
-
-    for(int i = 0; i < gridRows; i++){
-        printf("%d", column[i]);
-    }
-    printf("\n");
+int sumScore(int number){
+    int score = 0;
+    score += number;
+    return score;
 }
 
 /*
@@ -85,6 +69,7 @@ int *mergeRight(int *row){
     for (int i = (gridRows-1); i > 0; i--){
         if (row[i] == row[i-1]){
             row[i] += row[i-1];
+            sumScore(row[i-1]);
             row[i-1] = 0;
         }
     }
@@ -101,6 +86,7 @@ int *mergeLeft(int *row){
     for (int i = 0; i < gridRows-1; i++){
         if (row[i+1] == row[i]){
             row[i] += row[i+1];
+            sumScore(row[i+1]);
             row[i+1] = 0;
         }
     }
@@ -117,6 +103,7 @@ int *mergeUp(int *column){
     for (int i = 0; i < gridCols; i++){
         if (column[i] == column[i+1]){
             column[i] += column[i+1];
+            sumScore(column[i+1]);
             column[i+1] = 0;
         }
     }
@@ -133,6 +120,7 @@ int *mergeDown(int *column){
     for (int i = (gridCols -1); i > 0; i--){
         if (column[i-1] == column[i]){
             column[i] += column[i-1];
+            sumScore(column[i-1]);
             column[i-1] = 0;
         }
     }
@@ -156,7 +144,6 @@ void merge(int matrix[gridRows][gridCols], int direction){
     //Merging Left = 2
     //Merging Up = 3
     //Merging Down = 4
-    int *score = 0;
     if (direction == 1){
         for (int i = 0; i < gridRows; i++){
             int *row = getRow(matrix, i);

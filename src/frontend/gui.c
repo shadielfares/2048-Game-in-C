@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "../../include/macros.h"
+#include "../../include/merge.h"
 
 #define BACKGROUND (Color){188, 172, 159, 255}
 #define EMPTY_TILE (Color){204, 193, 180, 255}
@@ -77,6 +78,7 @@ void displayText(char * string, int x, int y, Color c) {
 void display2048GUI(const int screenHeight, const int screenWidth, const int gameHeight, const int gameWidth, const int tilePadding, const int border, const int tileWidth, const int tileHeight, const int fontAdjustX, const int fontAdjustY, const int fontSize, int grid[gridRows][gridCols]) {
 
     char string[10];
+    char score[100];
 
     BeginDrawing();
 
@@ -88,7 +90,7 @@ void display2048GUI(const int screenHeight, const int screenWidth, const int gam
     for (int row = 0; row < gridRows; row++) {
         for (int col = 0; col < gridCols; col++) {
 
-            char score[] = "Score: 512";
+            sprintf(score, "Score: %d", sumScore());
 
             int centerX = screenWidth - 400 + fontAdjustX * strlen(score);
             int centerY = 36;
