@@ -99,7 +99,8 @@ int main(int argc, char *argv[])
 	    	} else {
 	    		continue;
 	    	}
-
+	
+		usleep(150 * 1000);
 		bool movement = false;
 		bool fullTiles = true;
 
@@ -120,6 +121,7 @@ int main(int argc, char *argv[])
 			}
 		}
 		
+		usleep(150 * 1000);
 		if(movement){
 			addRandomTile(grid);
 		}
