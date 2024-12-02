@@ -20,11 +20,3 @@ jobs:
       with:
         name: GUI Executable
         path: ./the-matrix
-
-    - name: upload highscore
-      if: ${{ always() }}
-
-      uses: actions/upload-artifact@v4
-      with:
-        name: Highscore data
-        path: ./src/backend/highscore.txt
