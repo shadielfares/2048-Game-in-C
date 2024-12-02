@@ -9,6 +9,7 @@
 #include "../../include/macros.h"
 #include "../../include/tile_generation.h"
 #include "../../include/slide.h"
+#include "../../include/scoring.h"
 
 #define BACKGROUND (Color){188, 172, 159, 255}
 #define EMPTY_TILE (Color){204, 193, 180, 255}
@@ -186,7 +187,7 @@ void gamePlay(const int screenWidth, const int screenHeight){
         const int tileHeight = (int)((double)(gameHeight - border * 2) / (double)gridRows - (double)(2 * tilePadding));
 
         int grid[gridRows][gridCols];
-	bool done = false;
+	int done = 0;
 	int initialScore = 0;
 	int *scoreNum = &initialScore;
 
@@ -200,7 +201,7 @@ void gamePlay(const int screenWidth, const int screenHeight){
         //--------------------------------------------------------------------------------------
 
         // Main game loop
-        while (!WindowShouldClose() && !done)    // Detect window close button or ESC key
+        while (!WindowShouldClose() && done == 0)    // Detect window close button or ESC key
         {
             	int oldGrid[gridRows][gridCols];
             
@@ -246,7 +247,7 @@ void gamePlay(const int screenWidth, const int screenHeight){
 				}
 				
 				if(grid[r][c] == 2048){	
-				        done = true;
+				        done = 2;
 			        }	       
 			}
 		}
@@ -277,19 +278,34 @@ void gamePlay(const int screenWidth, const int screenHeight){
 		if(!fullTiles || isMerge > 0){
 			continue;
 		} else {
-			done = true;
+			done = 1;
 		}
 	}
 
-	win(*scoreNum);
+	highscore(*scoreNum);
+	win(*scoreNum, done);
 }
 
-void win(int score){
+void win(int score, int win){
 	const int screenWidth = 800;
 	const int screenHeight = 900;
 
+
+	int new_highscore[10] = {0};
+	readFile(new_highscore);
+	char text5[1000] = "";
+	
+
+	for(int i = 1; i <= 10; i++){
+		char temp[1000];
+		sprintf(temp, "%*d. %05d\n", 2, i, new_highscore[i - 1]);
+	 	strcat(text5, temp);
+	}
+
 	while(!WindowShouldClose() && !IsKeyPressed(KEY_R) && !IsKeyPressed(KEY_Q)){
-		const char* text1 = "You Lost :(";
+		
+		const char* text0 = "You Lost :(";
+		const char* text1 = "You Win! :)";
 		const int fontSize1 = 80;
 		const char* text2 = "Press 'R' To Play Again";
 		const char* text3 = TextFormat("Final Score: %d", score);
@@ -297,19 +313,30 @@ void win(int score){
 		const int fontSize2 = 45;
 		const char* text4 = "Press 'Q' To Quit The Game";
 		const int fontSize4 = 30;
+		const char* text6 = "HIGHSCORES";
 
-		const int x1 = (800 - MeasureText(text1, fontSize1)) * 0.5f;
+		const int x1 = (800 - MeasureText(text0, fontSize1)) * 0.5f;
 		const int x2 = (800 - MeasureText(text2, fontSize2)) * 0.5f;
 		const int x3 = (800 - MeasureText(text3, fontSize3)) * 0.5f;
 		const int x4 = (800 - MeasureText(text4, fontSize4)) * 0.5f;
+		const int x5 = (800 - MeasureText((const char *)text5, fontSize3)) * 0.5f;
+		const int x6 = (800 - MeasureText(text6, fontSize2)) * 0.5f;	
 
 		BeginDrawing();
 		{
 			ClearBackground(TILE2);
-			DrawText(text1, x1, 50, fontSize1, DARKBROWNc);
+
+			if(win == 2){
+				DrawText(text1, x1, 50, fontSize1, DARKBROWNc);
+			} else {
+				DrawText(text0, x1, 50, fontSize1, DARKBROWNc);
+			}
+
 			DrawText(text3, x3, 150, fontSize3, BACKGROUND);
 			DrawText(text2, x2, 780, fontSize2, DARKBROWNc);
 			DrawText(text4, x4, 850, fontSize4, BACKGROUND);
+			DrawText((const char *)text5, x5, 300, fontSize3, DARKBROWNc);
+			DrawText(text6, x6, 225, fontSize2, DARKBROWNc);
 		}
 		EndDrawing();
 	}

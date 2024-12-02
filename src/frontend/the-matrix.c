@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <unistd.h>
+#include "../../include/scoring.h"
 #include "../../include/gui.h"
 #include "../../include/macros.h"
 #include "../../include/tile_generation.h"
@@ -29,6 +30,7 @@ int main(int argc, char *argv[])
 	    const int screenWidth = 800;
 	    const int screenHeight = 900;
 	    InitWindow(screenWidth, screenHeight, "The Matrix");
+	    initHighScore();
 	    gamePlay(screenWidth, screenHeight);
         // Initialization
     //-------------------------------------------------------------------------------------

@@ -1,8 +1,6 @@
 #include <stdlib.h>
-void score();
+void initHighScore();
 void highscore(int score);
-int *readFile(char *fileName);
-void writeFile(char *fileName, int score[10]);
-void createFile(char *fileName);
-void printHighscore();
+void readFile(int highscores[10]);
+void writeFile(int new_highscore[10]);
 int main();
