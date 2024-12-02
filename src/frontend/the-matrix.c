@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 	    const int screenWidth = 800;
 	    const int screenHeight = 900;
 	    InitWindow(screenWidth, screenHeight, "The Matrix");
-	    initHighScore();
+	    //initHighScore();
 	    gamePlay(screenWidth, screenHeight);
         // Initialization
     //-------------------------------------------------------------------------------------
