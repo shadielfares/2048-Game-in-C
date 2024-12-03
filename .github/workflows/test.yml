@@ -11,22 +11,31 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: gcc:9  # Use GCC 9 Docker container for all steps
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Run Build in Docker
-      uses: docker://gcc:9
-      with:
-        entrypoint: ""
+    - name: Install Gcov
       run: |
         apt-get update
         apt-get install -y gcov
+
+    - name: Check GCC and Gcov versions
+      run: |
         gcc --version
         gcov --version
+
+    - name: Compile the program with GCC-9
+      run: |
         gcc -o 2048_test_cases -fprofile-arcs -ftest-coverage src/backend/2048_test_cases_files/2048_test_cases.c
-        ./2048_test_cases
+
+    - name: Run the test cases
+      run: ./2048_test_cases
+
+    - name: Generate coverage report
+      run: |
         gcov src/backend/2048_test_cases_files/2048_test_cases.c
 
     - name: Upload executable
