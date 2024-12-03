@@ -16,31 +16,18 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Install GCC 9 and Matching Gcov
+    - name: Run Build in Docker
+      uses: docker://gcc:9
+      with:
+        entrypoint: ""
       run: |
-        sudo apt-get update
-        sudo apt-get install -y gcc-9 g++-9
-
-    - name: Configure GCC and Gcov
-      run: |
-        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 10
-        sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-9 10
-
-    - name: Check GCC and Gcov versions
-      run: |
+        apt-get update
+        apt-get install -y gcov
         gcc --version
         gcov --version
-
-    - name: Compile the program with GCC-9
-      run: |
-        gcc-9 -o 2048_test_cases -fprofile-arcs -ftest-coverage src/backend/2048_test_cases_files/2048_test_cases.c
-
-    - name: Run the test cases
-      run: ./2048_test_cases
-
-    - name: Generate coverage report with Gcov-9
-      run: |
-        gcov-9 src/backend/2048_test_cases_files/2048_test_cases.c
+        gcc -o 2048_test_cases -fprofile-arcs -ftest-coverage src/backend/2048_test_cases_files/2048_test_cases.c
+        ./2048_test_cases
+        gcov src/backend/2048_test_cases_files/2048_test_cases.c
 
     - name: Upload executable
       uses: actions/upload-artifact@v3
@@ -56,8 +43,3 @@ jobs:
           src/backend/2048_test_cases_files/*.gcov
           src/backend/2048_test_cases_files/*.gcda
           src/backend/2048_test_cases_files/*.gcno
-          src/backend/2048_test_cases_files/*.c
-
-    - name: Inspect .gcno File
-      run: |
-        file src/backend/2048_test_cases_files/2048_test_cases.gcno
