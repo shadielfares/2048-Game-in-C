@@ -5,7 +5,7 @@
 
 void initHighScore(){
 	FILE *file;
-	char *fileName = "src/backend/highscore.txt";
+	char *fileName = "highscore.txt";
 	
 	file = fopen(fileName, "w");
 
@@ -40,7 +40,7 @@ void highscore(int score){
 
 void readFile(int highscores[10]){
 	FILE *file;
-        char *fileName = "src/backend/highscore.txt";
+        char *fileName = "highscore.txt";
         file = fopen(fileName, "r");
 
         if(file == NULL){
@@ -61,7 +61,7 @@ void readFile(int highscores[10]){
 
 void writeFile(int new_highscore[10]){
 	FILE *file;
-	char *fileName = "src/backend/highscore.txt";
+	char *fileName = "highscore.txt";
 	file = fopen(fileName, "w");
 
         if(file == NULL){

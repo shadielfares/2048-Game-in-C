@@ -30,7 +30,15 @@ int main(int argc, char *argv[])
 	    const int screenWidth = 800;
 	    const int screenHeight = 900;
 	    InitWindow(screenWidth, screenHeight, "The Matrix");
-	    //initHighScore();
+	    FILE *file;
+	    char *fileName = "highscore.txt";
+
+	    if(file = fopen(fileName, "r") == NULL){
+		initHighScore();
+	    } else {
+	    	fclose(file);
+	    }
+
 	    gamePlay(screenWidth, screenHeight);
         // Initialization
     //-------------------------------------------------------------------------------------
