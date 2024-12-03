@@ -13,37 +13,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Checkout the repository
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # Step 2: Install dependencies (e.g., GCC and gcov)
     - name: Install GCC and Gcov
       run: |
         sudo apt-get update
         sudo apt-get install -y gcc gcov
 
-    # Step 3: Compile the program
     - name: Compile the program with coverage
       run: |
         gcc -o 2048_test_cases -fprofile-arcs -ftest-coverage src/backend/2048_test_cases_files/2048_test_cases.c
 
-    # Step 4: Run the program
     - name: Run the test cases
       run: ./2048_test_cases
 
-    # Step 5: Generate the gcov coverage report
     - name: Generate coverage report
       run: gcov src/backend/2048_test_cases_files/2048_test_cases.c
 
-    # Step 6: Upload the executable as a build artifact
     - name: Upload executable
       uses: actions/upload-artifact@v3
       with:
         name: executable
         path: 2048_test_cases
 
-    # Step 7: Upload coverage and other files as build artifacts
     - name: Upload coverage files
       uses: actions/upload-artifact@v3
       with:
@@ -53,11 +46,3 @@ jobs:
           src/backend/2048_test_cases_files/*.gcda
           src/backend/2048_test_cases_files/*.gcno
           src/backend/2048_test_cases_files/*.c
-
-    # Step: Tag the commit as 'WORKING'
-    - name: Tag commit as WORKING
-      run: |
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git tag -a WORKING -m "This commit is verified as working"
-        git push origin WORKING
