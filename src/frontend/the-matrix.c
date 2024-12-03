@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 	    FILE *file;
 	    char *fileName = "highscore.txt";
 
-	    if(file = fopen(fileName, "r") == NULL){
+	    if((file = fopen(fileName, "r")) == NULL){
 		initHighScore();
 	    } else {
 	    	fclose(file);
