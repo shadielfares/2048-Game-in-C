@@ -17,11 +17,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Install Gcov
-      run: |
-        apt-get update
-        apt-get install -y gcov
-
     - name: Check GCC and Gcov versions
       run: |
         gcc --version
@@ -31,8 +26,13 @@ jobs:
       run: |
         gcc -o 2048_test_cases -fprofile-arcs -ftest-coverage src/backend/2048_test_cases_files/2048_test_cases.c
 
-    - name: Run the test cases
+    - name: Run the test cases to generate .gcda files
       run: ./2048_test_cases
+
+    - name: Debug Gcov Files
+      run: |
+        file src/backend/2048_test_cases_files/2048_test_cases.gcno
+        file src/backend/2048_test_cases_files/2048_test_cases.gcda
 
     - name: Generate coverage report
       run: |
