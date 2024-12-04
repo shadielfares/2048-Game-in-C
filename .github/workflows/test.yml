@@ -1,4 +1,4 @@
-name: Build, Test, and Upload Reports
+name: Build, Test, and Upload Artifacts
 
 on:
   push:
@@ -15,54 +15,39 @@ jobs:
     steps:
     # Step 1: Checkout the repository
     - name: Checkout Repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     # Step 2: Build the program
-    - name: Build Program
+    - name: Build Convert
       run: |
         gcc -o 2048_test_cases -fprofile-arcs -ftest-coverage src/backend/2048_test_cases_files/2048_test_cases.c
-      # Capture build output
-      continue-on-error: false
 
-    # Step 3: Run Tests and Capture Output
-    - name: Run Tests
-      run: |
-        ./2048_test_cases > test_results.txt
-      # Save the test output to a file
-
-    # Step 4: Generate Coverage Report
-    - name: Generate Coverage Report
-      run: |
-        gcov src/backend/2048_test_cases_files/2048_test_cases.c > coverage_report.txt
-      # Save gcov output to a file
-
-    # Step 5: Upload Executable
-    - name: Upload Executable
+    # Step 3: Upload the compiled program
+    - name: Upload Convert
       uses: actions/upload-artifact@v4
       with:
-        name: executable
-        path: 2048_test_cases
+        name: Executable
+        path: ./2048_test_cases
 
-    # Step 6: Upload Test Results
+    # Step 4: Build and run tests
+    - name: Build Test and Capture Output
+      run: |
+        mkdir -p testing
+        ./2048_test_cases > testing/test_results.txt
+        gcov src/backend/2048_test_cases_files/2048_test_cases.c > testing/coverage_report.txt
+
+    # Step 5: Upload test results
     - name: Upload Test Results
+      if: ${{ always() }}
       uses: actions/upload-artifact@v4
       with:
-        name: test-results
-        path: test_results.txt
+        name: Test Results
+        path: ./testing/test_results.txt
 
-    # Step 7: Upload Coverage Report
+    # Step 6: Upload coverage report
     - name: Upload Coverage Report
+      if: ${{ always() }}
       uses: actions/upload-artifact@v4
       with:
-        name: coverage-report
-        path: coverage_report.txt
-
-    # Step 8: Upload Coverage Files (Raw)
-    - name: Upload Coverage Files
-      uses: actions/upload-artifact@v4
-      with:
-        name: raw-coverage-files
-        path: |
-          *.gcov
-          *.gcda
-          *.gcno
+        name: Coverage Report
+        path: ./testing/coverage_report.txt
