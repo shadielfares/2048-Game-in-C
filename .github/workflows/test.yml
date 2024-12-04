@@ -19,7 +19,8 @@ jobs:
 
     # Step 2: Build Convert Executable
     - name: Build Convert Executable
-      run: make convert
+      run: |
+        gcc -o convert src/backend/2048_test_cases_files/*.c
 
     # Step 3: Upload Convert Executable
     - name: Upload Convert Executable
@@ -29,12 +30,17 @@ jobs:
         path: ./convert
 
     # Step 4: Build and Test with Coverage
-    - name: Build and Test
+    - name: Build and Test with Coverage
       run: |
-        make ctest
+        gcc -o ctest --coverage src/backend/2048_test_cases_files/*.c
         mkdir -p testing
-        ./test_script > testing/test_results.txt
-        gcov src/backend/2048_test_cases_files/*.c > testing/coverage_report.txt
+        ./ctest > testing/test_results.txt
+
+        # Generate individual GCov reports and extract coverage percentages
+        for file in src/backend/2048_test_cases_files/*.c; do
+          gcov "$file" > "testing/$(basename "$file").gcov.txt"
+          grep -oP '\d+\.\d+% of' "testing/$(basename "$file").gcov.txt" | head -n 1 | sed 's/ of//' >> testing/coverage_summary.txt
+        done
 
     # Step 5: Upload Test Results
     - name: Upload Test Results
@@ -43,14 +49,21 @@ jobs:
         name: Test Results
         path: ./testing/test_results.txt
 
-    # Step 6: Upload Coverage Report
-    - name: Upload Coverage Report
+    # Step 6: Upload Individual Coverage Reports
+    - name: Upload Individual Coverage Reports
       uses: actions/upload-artifact@v4
       with:
-        name: Coverage Report
-        path: ./testing/coverage_report.txt
+        name: Individual Coverage Reports
+        path: ./testing/*.gcov.txt
 
-    # Step 7: Upload Raw Coverage Files
+    # Step 7: Upload Coverage Summary
+    - name: Upload Coverage Summary
+      uses: actions/upload-artifact@v4
+      with:
+        name: Coverage Summary
+        path: ./testing/coverage_summary.txt
+
+    # Step 8: Upload Raw Coverage Files
     - name: Upload Raw Coverage Files
       uses: actions/upload-artifact@v4
       with:
