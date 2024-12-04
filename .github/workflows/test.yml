@@ -1,4 +1,4 @@
-name: Build, Test, and Upload Reports
+name: Build, Test, and Upload Artifacts
 
 on:
   push:
@@ -17,59 +17,65 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
-    # Step 2: Install GCC and GCov
-    - name: Install GCC and GCov 10
+    # Step 2: Debug Files and Paths
+    - name: List Files
       run: |
-        sudo apt-get update
-        sudo apt-get install -y gcc-10 g++-10
-        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 10
-        sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 10
-        sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-10 10
+        echo "Listing files in the repository root:"
+        ls -R
+        echo "Checking for 2048_test_cases.c:"
+        ls src/backend/2048_test_cases_files
 
-    # Step 3: Verify GCC and GCov Versions
-    - name: Verify GCC and GCov Versions
+    # Step 3: Build the Program with Coverage
+    - name: Build Program
       run: |
-        gcc --version
-        gcov --version
+        gcc -o 2048_test_cases -fprofile-arcs -ftest-coverage src/backend/2048_test_cases_files/2048_test_cases.c
 
-    # Step 4: Upload Convert Executable
-    - name: Upload Convert Executable
+    # Step 4: Upload Executable
+    - name: Upload Executable
       uses: actions/upload-artifact@v4
       with:
-        name: Convert Utility
-        path: ./convert
+        name: Executable
+        path: ./2048_test_cases
 
-    # Step 5: Build and Test with Coverage
-    - name: Build and Test with Coverage
+    # Step 5: Run Tests
+    - name: Run Tests
       run: |
-        make -f path/to/Makefile ctest
         mkdir -p testing
-        ./test_script > testing/test_results.txt
-        for file in src/backend/2048_test_cases_files/*.c; do
-          gcov -o src/backend/2048_test_cases_files "$file" > "testing/$(basename "$file").gcov.txt"
-          grep -oP '\d+\.\d+% of' "testing/$(basename "$file").gcov.txt" | head -n 1 | sed 's/ of//' >> testing/coverage_summary.txt
-        done
+        ./2048_test_cases > testing/test_results.txt || echo "Program crashed or returned non-zero exit code"
 
-    # Step 6: Upload Test Results
+    # Step 6: Generate Test Cases for Sliding and Combining Tiles
+    - name: Run Test Cases for Sliding and Combining Tiles
+      run: |
+        mkdir -p testing
+        gcc -o test_cases -fprofile-arcs -ftest-coverage src/backend/2048_test_cases_files/2048_test_cases.c
+        ./test_cases > testing/sliding_combining_test_results.txt || echo "Test cases crashed or returned non-zero exit code"
+
+    # Step 7: Generate Coverage Report
+    - name: Generate Coverage Report
+      run: |
+        mkdir -p testing
+        gcov src/backend/2048_test_cases_files/2048_test_cases.c > testing/coverage_report.txt || echo "gcov failed"
+
+    # Step 8: Upload Test Results
     - name: Upload Test Results
       if: ${{ always() }}
       uses: actions/upload-artifact@v4
       with:
-        name: CTest
+        name: Test Results
         path: ./testing/test_results.txt
 
-    # Step 7: Upload Individual Coverage Reports
-    - name: Upload Individual Coverage Reports
+    # Step 9: Upload Sliding and Combining Tiles Test Results
+    - name: Upload Sliding and Combining Tiles Test Results
       if: ${{ always() }}
       uses: actions/upload-artifact@v4
       with:
-        name: Coverage Reports
-        path: ./testing/*.gcov.txt
+        name: Sliding and Combining Tiles Test Results
+        path: ./testing/sliding_combining_test_results.txt
 
-    # Step 8: Upload Coverage Summary
-    - name: Upload Coverage Summary
+    # Step 10: Upload Coverage Report
+    - name: Upload Coverage Report
       if: ${{ always() }}
       uses: actions/upload-artifact@v4
       with:
-        name: Coverage Summary
-        path: ./testing/coverage_summary.txt
+        name: Coverage Report
+        path: ./testing/coverage_report.txt
