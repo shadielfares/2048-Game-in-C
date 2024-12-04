@@ -32,19 +32,14 @@ jobs:
         gcc --version
         gcov --version
 
-    # Step 4: Build Convert Executable
-    - name: Build Convert Executable
-      run: |
-        make -f path/to/Makefile convert
-
-    # Step 5: Upload Convert Executable
+    # Step 4: Upload Convert Executable
     - name: Upload Convert Executable
       uses: actions/upload-artifact@v4
       with:
         name: Convert Utility
         path: ./convert
 
-    # Step 6: Build and Test with Coverage
+    # Step 5: Build and Test with Coverage
     - name: Build and Test with Coverage
       run: |
         make -f path/to/Makefile ctest
@@ -55,7 +50,7 @@ jobs:
           grep -oP '\d+\.\d+% of' "testing/$(basename "$file").gcov.txt" | head -n 1 | sed 's/ of//' >> testing/coverage_summary.txt
         done
 
-    # Step 7: Upload Test Results
+    # Step 6: Upload Test Results
     - name: Upload Test Results
       if: ${{ always() }}
       uses: actions/upload-artifact@v4
@@ -63,7 +58,7 @@ jobs:
         name: CTest
         path: ./testing/test_results.txt
 
-    # Step 8: Upload Individual Coverage Reports
+    # Step 7: Upload Individual Coverage Reports
     - name: Upload Individual Coverage Reports
       if: ${{ always() }}
       uses: actions/upload-artifact@v4
@@ -71,7 +66,7 @@ jobs:
         name: Coverage Reports
         path: ./testing/*.gcov.txt
 
-    # Step 9: Upload Coverage Summary
+    # Step 8: Upload Coverage Summary
     - name: Upload Coverage Summary
       if: ${{ always() }}
       uses: actions/upload-artifact@v4
