@@ -1,4 +1,4 @@
-name: Build, Test, and Upload Artifacts
+name: Build, Test, and Upload Reports
 
 on:
   push:
@@ -17,49 +17,45 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
-    # Step 2: Debug Files and Paths
-    - name: List Files
-      run: |
-        echo "Listing files in the repository root:"
-        ls -R
-        echo "Checking for 2048_test_cases.c:"
-        ls src/backend/2048_test_cases_files
+    # Step 2: Build Convert Executable
+    - name: Build Convert Executable
+      run: make convert
 
-    # Step 3: Build the Program
-    - name: Build Program
-      run: |
-        gcc -o 2048_test_cases -fprofile-arcs -ftest-coverage src/backend/2048_test_cases_files/2048_test_cases.c
-
-    # Step 4: Upload Executable
-    - name: Upload Executable
+    # Step 3: Upload Convert Executable
+    - name: Upload Convert Executable
       uses: actions/upload-artifact@v4
       with:
-        name: Executable
-        path: ./2048_test_cases
+        name: Convert Executable
+        path: ./convert
 
-    # Step 5: Run Tests
-    - name: Run Tests
+    # Step 4: Build and Test with Coverage
+    - name: Build and Test
       run: |
+        make ctest
         mkdir -p testing
-        ./2048_test_cases > testing/test_results.txt || echo "Program crashed or returned non-zero exit code"
+        ./test_script > testing/test_results.txt
+        gcov src/backend/2048_test_cases_files/*.c > testing/coverage_report.txt
 
-    # Step 6: Generate Coverage Report
-    - name: Generate Coverage Report
-      run: |
-        gcov src/backend/2048_test_cases_files/2048_test_cases.c > testing/coverage_report.txt || echo "gcov failed"
-
-    # Step 7: Upload Test Results
+    # Step 5: Upload Test Results
     - name: Upload Test Results
-      if: ${{ always() }}
       uses: actions/upload-artifact@v4
       with:
         name: Test Results
         path: ./testing/test_results.txt
 
-    # Step 8: Upload Coverage Report
+    # Step 6: Upload Coverage Report
     - name: Upload Coverage Report
-      if: ${{ always() }}
       uses: actions/upload-artifact@v4
       with:
         name: Coverage Report
         path: ./testing/coverage_report.txt
+
+    # Step 7: Upload Raw Coverage Files
+    - name: Upload Raw Coverage Files
+      uses: actions/upload-artifact@v4
+      with:
+        name: Raw Coverage Files
+        path: |
+          *.gcov
+          *.gcda
+          *.gcno
