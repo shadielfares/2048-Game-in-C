@@ -50,11 +50,14 @@ jobs:
         gcc -o test_cases -fprofile-arcs -ftest-coverage src/backend/2048_test_cases_files/2048_test_cases.c
         ./test_cases > testing/sliding_combining_test_results.txt || echo "Test cases crashed or returned non-zero exit code"
 
-    # Step 7: Generate Coverage Report
-    - name: Generate Coverage Report
+    # Step 7: Generate Coverage Report with Percentage
+    - name: Generate Coverage Report with Percentage
       run: |
         mkdir -p testing
         gcov src/backend/2048_test_cases_files/2048_test_cases.c > testing/coverage_report.txt || echo "gcov failed"
+        # Extract coverage percentage and append to the coverage report
+        coverage=$(grep -oP '\d+\.\d+%' testing/coverage_report.txt | head -n 1)
+        echo "Coverage Percentage: $coverage" >> testing/coverage_report.txt
 
     # Step 8: Upload Test Results
     - name: Upload Test Results
