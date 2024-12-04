@@ -17,7 +17,7 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
-    # Step 2: Install GCC and GCov 10
+    # Step 2: Install GCC and GCov
     - name: Install GCC and GCov 10
       run: |
         sudo apt-get update
@@ -26,59 +26,49 @@ jobs:
         sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 10
         sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-10 10
 
-    # Step 3: Verify GCC and GCov Versions
-    - name: Verify GCC and GCov Versions
-      run: |
-        gcc --version
-        gcov --version
-
-    # Step 4: Build Convert Executable
+    # Step 3: Build Convert Executable
     - name: Build Convert Executable
       run: |
-        gcc -o convert src/backend/2048_test_cases_files/*.c
+        make convert
 
-    # Step 5: Upload Convert Executable
+    # Step 4: Upload Convert Executable
     - name: Upload Convert Executable
       uses: actions/upload-artifact@v4
       with:
-        name: Convert Executable
+        name: Convert Utility
         path: ./convert
 
-    # Step 6: Build and Test with Coverage
+    # Step 5: Build and Test with Coverage
     - name: Build and Test with Coverage
       run: |
-        gcc -o ctest --coverage src/backend/2048_test_cases_files/*.c
+        make ctest
         mkdir -p testing
-        ./ctest > testing/test_results.txt
+        ./test_script > testing/test_results.txt
         for file in src/backend/2048_test_cases_files/*.c; do
           gcov -o src/backend/2048_test_cases_files "$file" > "testing/$(basename "$file").gcov.txt"
+          grep -oP '\d+\.\d+% of' "testing/$(basename "$file").gcov.txt" | head -n 1 | sed 's/ of//' >> testing/coverage_summary.txt
         done
 
-    # Step 7: Upload Test Results
+    # Step 6: Upload Test Results
     - name: Upload Test Results
+      if: ${{ always() }}
       uses: actions/upload-artifact@v4
       with:
-        name: Test Results
+        name: CTest
         path: ./testing/test_results.txt
 
-    # Step 8: Upload Individual Coverage Reports
+    # Step 7: Upload Individual Coverage Reports
     - name: Upload Individual Coverage Reports
+      if: ${{ always() }}
       uses: actions/upload-artifact@v4
       with:
-        name: Individual Coverage Reports
+        name: Coverage Reports
         path: ./testing/*.gcov.txt
 
-    # Step 9: Debug Directory Structure
-    - name: Debug Directory Structure
-      run: |
-        ls -R src/backend/2048_test_cases_files
-
-    # Step 10: Upload Raw Coverage Files
-    - name: Upload Raw Coverage Files
+    # Step 8: Upload Coverage Summary
+    - name: Upload Coverage Summary
+      if: ${{ always() }}
       uses: actions/upload-artifact@v4
       with:
-        name: Raw Coverage Files
-        path: |
-          *.gcov
-          *.gcda
-          *.gcno
+        name: Coverage Summary
+        path: ./testing/coverage_summary.txt
