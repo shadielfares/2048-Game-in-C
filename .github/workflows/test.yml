@@ -1,4 +1,4 @@
-name: Build and Upload Artifacts
+name: Build, Test, and Upload Reports
 
 on:
   push:
@@ -21,28 +21,47 @@ jobs:
     - name: Build Program
       run: |
         gcc -o 2048_test_cases -fprofile-arcs -ftest-coverage src/backend/2048_test_cases_files/2048_test_cases.c
+      # Capture build output
+      continue-on-error: false
 
-    # Step 3: Run the program to generate coverage data
+    # Step 3: Run Tests and Capture Output
     - name: Run Tests
-      run: ./2048_test_cases
+      run: |
+        ./2048_test_cases > test_results.txt
+      # Save the test output to a file
 
-    # Step 4: Generate coverage report
+    # Step 4: Generate Coverage Report
     - name: Generate Coverage Report
       run: |
-        gcov src/backend/2048_test_cases_files/2048_test_cases.c -o .
+        gcov src/backend/2048_test_cases_files/2048_test_cases.c > coverage_report.txt
+      # Save gcov output to a file
 
-    # Step 5: Upload Executable as Artifact
+    # Step 5: Upload Executable
     - name: Upload Executable
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: executable
         path: 2048_test_cases
 
-    # Step 6: Upload Coverage Files as Artifacts
-    - name: Upload Coverage Files
-      uses: actions/upload-artifact@v3
+    # Step 6: Upload Test Results
+    - name: Upload Test Results
+      uses: actions/upload-artifact@v4
       with:
-        name: coverage-files
+        name: test-results
+        path: test_results.txt
+
+    # Step 7: Upload Coverage Report
+    - name: Upload Coverage Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: coverage_report.txt
+
+    # Step 8: Upload Coverage Files (Raw)
+    - name: Upload Coverage Files
+      uses: actions/upload-artifact@v4
+      with:
+        name: raw-coverage-files
         path: |
           *.gcov
           *.gcda
