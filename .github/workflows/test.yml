@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Checkout the repository
+    # Step 1: Checkout Repository
     - name: Checkout Repository
       uses: actions/checkout@v4
 
@@ -21,13 +21,13 @@ jobs:
     - name: Install GCC and GCov 10
       run: |
         sudo apt-get update
-        sudo apt-get install -y gcc-10 g++-10 lcov
+        sudo apt-get install -y gcc-10 g++-10
         sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 10
         sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 10
         sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-10 10
 
-    # Step 3: Check GCC and GCov Versions
-    - name: Check GCC and GCov Versions
+    # Step 3: Verify GCC and GCov Versions
+    - name: Verify GCC and GCov Versions
       run: |
         gcc --version
         gcov --version
@@ -52,7 +52,6 @@ jobs:
         ./ctest > testing/test_results.txt
         for file in src/backend/2048_test_cases_files/*.c; do
           gcov -o src/backend/2048_test_cases_files "$file" > "testing/$(basename "$file").gcov.txt"
-          grep -oP '\d+\.\d+% of' "testing/$(basename "$file").gcov.txt" | head -n 1 | sed 's/ of//' >> testing/coverage_summary.txt
         done
 
     # Step 7: Upload Test Results
@@ -69,12 +68,10 @@ jobs:
         name: Individual Coverage Reports
         path: ./testing/*.gcov.txt
 
-    # Step 9: Upload Coverage Summary
-    - name: Upload Coverage Summary
-      uses: actions/upload-artifact@v4
-      with:
-        name: Coverage Summary
-        path: ./testing/coverage_summary.txt
+    # Step 9: Debug Directory Structure
+    - name: Debug Directory Structure
+      run: |
+        ls -R src/backend/2048_test_cases_files
 
     # Step 10: Upload Raw Coverage Files
     - name: Upload Raw Coverage Files
