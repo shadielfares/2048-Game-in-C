@@ -11,44 +11,39 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: gcc:9  # Use GCC 9 Docker container for all steps
 
     steps:
-    - name: Checkout code
+    # Step 1: Checkout the repository
+    - name: Checkout Repository
       uses: actions/checkout@v3
 
-    - name: Check GCC and Gcov versions
-      run: |
-        gcc --version
-        gcov --version
-
-    - name: Compile the program with GCC-9
+    # Step 2: Build the program
+    - name: Build Program
       run: |
         gcc -o 2048_test_cases -fprofile-arcs -ftest-coverage src/backend/2048_test_cases_files/2048_test_cases.c
 
-    - name: Run the test cases to generate .gcda files
+    # Step 3: Run the program to generate coverage data
+    - name: Run Tests
       run: ./2048_test_cases
 
-    - name: Debug Gcov Files
+    # Step 4: Generate coverage report
+    - name: Generate Coverage Report
       run: |
-        file src/backend/2048_test_cases_files/2048_test_cases.gcno
-        file src/backend/2048_test_cases_files/2048_test_cases.gcda
+        gcov src/backend/2048_test_cases_files/2048_test_cases.c -o .
 
-    - name: Generate coverage report
-      run: |
-        gcov src/backend/2048_test_cases_files/2048_test_cases.c
-
-    - name: Upload executable
+    # Step 5: Upload Executable as Artifact
+    - name: Upload Executable
       uses: actions/upload-artifact@v3
       with:
         name: executable
         path: 2048_test_cases
 
-    - name: Upload coverage files
+    # Step 6: Upload Coverage Files as Artifacts
+    - name: Upload Coverage Files
       uses: actions/upload-artifact@v3
       with:
         name: coverage-files
         path: |
-          src/backend/2048_test_cases_files/*.gcov
-          src/backend/2048_test_cases_files/*.gcda
-          src/backend/2048_test_cases_files/*.gcno
+          *.gcov
+          *.gcda
+          *.gcno
