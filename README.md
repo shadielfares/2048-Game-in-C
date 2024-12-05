@@ -43,13 +43,18 @@
    cd the-team-assignment-team-2-the-matrix
    ```
 
-3. **Compile the program**
+3. **Download the necessary packages**:
+```bash
+sudo apt install libglfw3-dev libopenal-dev libxxf86vm-dev libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev libwayland-dev libxkbcommon-dev; git clone --depth 1 https://github.com/raysan5/raylib.git raylib; cd raylib/src/; make PLATFORM=PLATFORM_DESKTOP; sudo make install; cd ../../; make;
+```
+   
+4. **Compile the program**
    Paste the following command into the terminal:
    ```bash
    gcc -o the-matrix src/frontend/the-matrix.c src/frontend/gui.c include/gui.h src/backend/tile_generation.c include/tile_generation.h include/macros.h src/backend/slide.c include/slide.h src/backend/merge.c include/merge.h src/backend/scoring.c include/scoring.h -lraylib -lglfw -lGL -lopenal -lm -lpthread -ldl -lrt -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor; sudo ldconfig;
    ```
 
-4. **Run the executable and aim for a new high score! 🏆**
+5. **Run the executable and aim for a new high score! 🏆**
    ```bash
    ./the-matrix
    ```
