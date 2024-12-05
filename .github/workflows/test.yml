@@ -1,4 +1,4 @@
-name: Build, Test, and Upload Artifacts
+name: Build, Test, and Upload Coverage Report
 
 on:
   push:
@@ -18,63 +18,31 @@ jobs:
       uses: actions/checkout@v4
 
     # Step 2: Install GCC and GCov
-    - name: Install GCC and GCov 10
+    - name: Install GCC and GCov
       run: |
         sudo apt-get update
-        sudo apt-get install -y gcc-10 g++-10
-        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 10
-        sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 10
-        sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-10 10
+        sudo apt-get install -y gcc g++ gcov
 
-    # Step 3: Build the Program with Coverage
+    # Step 3: Build Program with Coverage
     - name: Build Program
       run: |
         mkdir -p testing
         gcc -o 2048_test_cases -fprofile-arcs -ftest-coverage src/backend/2048_test_cases_files/2048_test_cases.c
 
-    # Step 4: Upload Executable
-    - name: Upload Executable
-      uses: actions/upload-artifact@v4
-      with:
-        name: Executable
-        path: ./2048_test_cases
-
-    # Step 5: Run the Program and Generate Test Results
-    - name: Run Tests
+    # Step 4: Run Program
+    - name: Run Program
       run: |
         ./2048_test_cases > testing/test_results.txt || echo "Program crashed or returned non-zero exit code"
 
-    # Step 6: Run Sliding and Combining Tiles Test Cases
-    - name: Run Test Cases for Sliding and Combining Tiles
-      run: |
-        gcc -o test_cases -fprofile-arcs -ftest-coverage src/backend/2048_test_cases_files/2048_test_cases.c
-        ./test_cases > testing/sliding_combining_test_results.txt || echo "Test cases crashed or returned non-zero exit code"
-
-    # Step 7: Generate Coverage Report with Percentage
-    - name: Generate Coverage Report with Percentage
+    # Step 5: Generate Coverage Report
+    - name: Generate Coverage Report
       run: |
         gcov src/backend/2048_test_cases_files/2048_test_cases.c > testing/coverage_report.txt || echo "gcov failed"
-        # Extract coverage percentage and append to the report
+        # Extract and append coverage percentage
         coverage=$(grep -oP '\d+\.\d+%' testing/coverage_report.txt | head -n 1)
         echo "Coverage Percentage: $coverage" >> testing/coverage_report.txt
 
-    # Step 8: Upload Test Results
-    - name: Upload Test Results
-      if: ${{ always() }}
-      uses: actions/upload-artifact@v4
-      with:
-        name: Test Results
-        path: ./testing/test_results.txt
-
-    # Step 9: Upload Sliding and Combining Tiles Test Results
-    - name: Upload Sliding and Combining Tiles Test Results
-      if: ${{ always() }}
-      uses: actions/upload-artifact@v4
-      with:
-        name: Sliding and Combining Tiles Test Results
-        path: ./testing/sliding_combining_test_results.txt
-
-    # Step 10: Upload Coverage Report
+    # Step 6: Upload Coverage Report Artifact
     - name: Upload Coverage Report
       if: ${{ always() }}
       uses: actions/upload-artifact@v4
