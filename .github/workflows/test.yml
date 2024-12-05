@@ -1,4 +1,4 @@
-name: Build, Test, and Upload Coverage Report
+name: Build, Test, and Upload Artifacts
 
 on:
   push:
@@ -32,21 +32,49 @@ jobs:
         mkdir -p testing
         gcc -o 2048_test_cases -fprofile-arcs -ftest-coverage src/backend/2048_test_cases_files/2048_test_cases.c
 
-    # Step 4: Run the Program
-    - name: Run Program
+    # Step 4: Upload Executable
+    - name: Upload Executable
+      uses: actions/upload-artifact@v4
+      with:
+        name: Executable
+        path: ./2048_test_cases
+
+    # Step 5: Run the Program and Generate Test Results
+    - name: Run Tests
       run: |
         ./2048_test_cases > testing/test_results.txt || echo "Program crashed or returned non-zero exit code"
 
-    # Step 5: Generate Coverage Report with Percentage
+    # Step 6: Run Sliding and Combining Tiles Test Cases
+    - name: Run Test Cases for Sliding and Combining Tiles
+      run: |
+        gcc -o test_cases -fprofile-arcs -ftest-coverage src/backend/2048_test_cases_files/2048_test_cases.c
+        ./test_cases > testing/sliding_combining_test_results.txt || echo "Test cases crashed or returned non-zero exit code"
+
+    # Step 7: Generate Coverage Report with Percentage
     - name: Generate Coverage Report with Percentage
       run: |
-        mkdir -p testing
         gcov src/backend/2048_test_cases_files/2048_test_cases.c > testing/coverage_report.txt || echo "gcov failed"
         # Extract coverage percentage and append to the report
         coverage=$(grep -oP '\d+\.\d+%' testing/coverage_report.txt | head -n 1)
         echo "Coverage Percentage: $coverage" >> testing/coverage_report.txt
 
-    # Step 6: Upload Coverage Report Artifact
+    # Step 8: Upload Test Results
+    - name: Upload Test Results
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: Test Results
+        path: ./testing/test_results.txt
+
+    # Step 9: Upload Sliding and Combining Tiles Test Results
+    - name: Upload Sliding and Combining Tiles Test Results
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: Sliding and Combining Tiles Test Results
+        path: ./testing/sliding_combining_test_results.txt
+
+    # Step 10: Upload Coverage Report
     - name: Upload Coverage Report
       if: ${{ always() }}
       uses: actions/upload-artifact@v4
