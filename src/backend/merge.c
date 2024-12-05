@@ -1,30 +1,6 @@
 #include <stdio.h>
 #include "../../include/macros.h"
 
-//int testGrid[gridRows][gridCols] = { {16,8,2,2}, {4,4,0,0}, {0,0,0,0}, {0,0,0,0} };
-
-/*
- * Params: 2D Array
- * Return: Void
- */
-
-//static int score = 0;
-
-void printArray(int matrix[gridRows][gridCols]){
-
-    for(int i = 0; i < gridRows; i++){
-        for(int j = 0; j < gridCols ; j++){
-            printf("%d", matrix[i][j]);
-        }
-        printf("\n");
-    }
-}
-
-/*
- * Params: int number
- * Return: Sum of number
- */
-
 /*
  * Params: 2D Array
  * Return: Single Row at specified index
