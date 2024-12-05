@@ -7,12 +7,7 @@
  */
 
 int *getRow(int matrix[gridRows][gridCols], int index){
-    if (index < 0 || index >= gridRows){
-        printf("Fix the index value");
-        return NULL;
-    } else {
-        return matrix[index];
-    }
+    return matrix[index];
 }
 
 /*
@@ -21,14 +16,10 @@ int *getRow(int matrix[gridRows][gridCols], int index){
  */
 
 void getColumn(int matrix[gridRows][gridCols], int index, int column[gridCols]){
-    if (index < 0 || index >= gridCols){
-        printf("Fix the index value");
-    } else {
         for (int i = 0; i < gridCols; i++){
             //Get first index of all rows
             column[i] = matrix[i][index]; 
         }
-    }
 }
 
 /*
@@ -146,16 +137,3 @@ void merge(int matrix[gridRows][gridCols], int direction, int *score){
         }
     }
 }
-
-//int main(){
-//    printf("PRE MERGE: %d\n", getScore());
-//    printf("\nGRID PRE ACTION\n");
-//    printArray(testGrid);
-//
-//    printf("\nPRINTING gridCols MERGED DOWN\n");
-//    merge(testGrid, 2);
-//    printArray(testGrid);
-//
-//    printf("POST MERGE: %d\n", getScore());
-//    return 0;
-//}
