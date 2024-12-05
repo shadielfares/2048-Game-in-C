@@ -3,7 +3,7 @@ Title of the Project: The Matrix
 High Level Description:
 a) 2048 is a single player game, in a 4x4 grid where you add up adjacent tiles. The user interacts with the app via a GUI.
 b) The context in which the app will be used is for entertainment purposes / leisure.
-c) Constraints:`
+c) Constraints:
 1. The game will be played on a 4x4 grid, with the user having to slide the tiles in the grid to combine them.
 2. The game will end when the grid is full and no more moves can be made or the game will end when you have a single block with a value of 2048 on your grid. 
 3. The user will have the option to restart the game.
@@ -37,14 +37,14 @@ Aiden
         Game Loop: Implementing a while loop to check for game over or win conditions.
         GUI: Using GTK to create the graphical user interface for the game.
         Help Flag: Creating a help flag in Bash to describe the game and provide user guidance.
-
+	(UPDATE) Worked on Reflection, Build for Game Executable
 Kurlan
 
     Main Tasks: Scoring, Build Workflow (build.yml)
     Details:
         Scoring Function: Implementing the scoring system, which includes the total score calculation during gameplay and a leaderboard.
         Build Workflow: Uploading the build, conducting tests, and generating a report (artifact build/gcov).
-	(UPDATE) Completed sliding tiles function
+	(UPDATE) Completed sliding tiles function, Completed losing screen, Completed losing screen
 Akshayan
 
     Main Tasks: Loading Random Tiles on Game Start, Test Cases
@@ -60,29 +60,37 @@ Shadi
     Details:
         Sliding Tiles Method: Implementing the logic to move tiles in the grid. (UPDATE: Done by Kurlan)
         Combining Tiles Method: Developing functionality to read grid values and combine tiles according to game rules.
+	(UPDATE) Completed Scoring, Completed README.md, Worked on Reflection
 
 Increments:
 
 Phase 1: Core Mechanics and Basic Game Setup - Due Date: Nov. 19 (UPDATE: Nov 28)
 
-    Game Loop Implementation (Aiden): Set up the while loop to manage the game state (ongoing, game over, or win). (Done)
-    Loading Random Tiles (Akshayan): Implement the method for initializing the game with random tiles. (Done)
-    Sliding Tiles Method (Shadi): Develop the logic for moving tiles within the grid. (UPDATE: Done by Kurlan)
+    Game Loop Implementation (Aiden): Set up the while loop to manage the game state (ongoing, game over, or win). (UPDATE 1: Done)
+    Loading Random Tiles (Akshayan): Implement the method for initializing the game with random tiles. (UPDATE 1: Done)
+    Sliding Tiles Method (Shadi): Develop the logic for moving tiles within the grid. (UPDATE 1: Done by Kurlan)
     
-    (UPDATE) Added combining tiles finished (Shadi), Completed GUI (Aiden), Temp Workflow (Aiden), Help flag (Aiden)
+    (UPDATE 1) Added combining tiles finished (Shadi), Completed GUI (Aiden), Temp Workflow (Aiden), Help flag (Aiden)
 
-Phase 2: Game Logic Enhancements - Due Date: Nov. 24
+Phase 2: Game Logic Enhancements - Due Date: Nov. 24 (UPDATE: Nov 28)
 
-    Combining Tiles Method (Shadi): Implement the logic for reading and combining grid values according to game rules. (UPDATE: Done)
-    Scoring Function (Kurlan): Integrate the scoring system to calculate points and track the leaderboard.
+    Combining Tiles Method (Shadi): Implement the logic for reading and combining grid values according to game rules. (UPDATE 1: Done)
+    Scoring Function (Kurlan): Integrate the scoring system to calculate points and track the leaderboard. (UPDATE 1: phase 3)
 
-Phase 3: Testing and Build Workflow - Due Date: Nov. 29
+Phase 3: Testing and Build Workflow - Due Date: Nov. 29 (UPDATE 2: Dec. 1)
 
-    Test Cases (Akshayan): Create and implement test cases for both the combining and sliding tiles methods.
-    Build Workflow Setup (Kurlan): Set up the build.yml file to run tests and generate reports for code coverage.
+    Test Cases (Akshayan): Create and implement test cases for both the combining and sliding tiles methods. (UPDATE 2: phase 4)
+    Build Workflow Setup (Kurlan): Set up the build.yml file to run tests and generate reports for code coverage. (UPDATE 2: phase4)
+
+    (UPDATE 2) Completed Scoring (Shadi), Completed Highscore, Win/Lose Screen, Added Gameloop Features (Kurlan), Working Executable (Aiden) 
 
 Phase 4: User Interface and Final Touches - Due Date: Dec. 4
 
-    GUI Development (Aiden): Create the graphical user interface using GTK. (UPDATE: Done)
-    Help Flag (Aiden): Develop the Bash help flag to provide user instructions and game descriptions. (UPDATE: Done)
-    Full Build and Deployment (Kurlan): Finalize the build process and ensure all components are properly integrated.
+    GUI Development (Aiden): Create the graphical user interface using GTK. (UPDATE 1: Done)
+    Help Flag (Aiden): Develop the Bash help flag to provide user instructions and game descriptions. (UPDATE 1: Done)
+    Full Build and Deployment (Kurlan): Finalize the build process and ensure all components are properly integrated. (UPDATE 3: Done) 
+
+    (UPDATE 3) Workflow Setup (Kurlan), README.md (Shadi), Reflection (Shadi and Aiden)
+
+(UPDATE 3) Phase 5: Complete test cases
+	Complete test cases (Akshayan): Complete test cases for all functions and generate outputs for tests passed.
