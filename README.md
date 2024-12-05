@@ -52,6 +52,4 @@
 4. **Run the executable and aim for a new high score! 🏆**
    ```bash
    ./the-matrix
-   ```  
-
---- 
+   ```
