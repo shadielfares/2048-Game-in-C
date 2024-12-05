@@ -27,7 +27,7 @@ jobs:
     - name: Build Program
       run: |
         mkdir -p testing
-        gcc -o 2048_test_cases -fprofile-arcs -ftest-coverage /Users/guest.user/the-team-assignment-team-2-the-matrix/src/backend/2048_test_cases_files/2048_test_cases.c
+        gcc -o 2048_test_cases -fprofile-arcs -ftest-coverage src/backend/2048_test_cases_files/2048_test_cases.c
 
     # Step 4: Run Program
     - name: Run Program
@@ -37,7 +37,7 @@ jobs:
     # Step 5: Generate Coverage Report
     - name: Generate Coverage Report
       run: |
-        gcov /Users/guest.user/the-team-assignment-team-2-the-matrix/src/backend/2048_test_cases_files/2048_test_cases.c > testing/coverage_report.txt || echo "gcov failed"
+        gcov src/backend/2048_test_cases_files/2048_test_cases.c > testing/coverage_report.txt || echo "gcov failed"
         # Append Coverage Percentage to Report
         coverage=$(grep -oP '\d+\.\d+%' testing/coverage_report.txt | head -n 1)
         echo "Coverage Percentage: $coverage" >> testing/coverage_report.txt
