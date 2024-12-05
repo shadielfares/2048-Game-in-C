@@ -27,7 +27,7 @@ jobs:
     - name: Upload test results
       if: ${{ always() }}
 
-      uses: actions/upload-artifacts@v4
+      uses: actions/upload-artifact@v4
       with:
         name: Test results
         path: ./test_results.txt
@@ -35,7 +35,7 @@ jobs:
     - name: Upload coverage report
       if: ${{ always() }}
 
-      uses: actions/upload-artifacts@v4
+      uses: actions/upload-artifact@v4
       with:
         name: Coverage report
         path: ./coverage_report.txt
