@@ -22,7 +22,7 @@ jobs:
         path: ./the-matrix
 
     - name: Build backend test
-      run: make backend-test; ./backend-test > test_results.txt; gcov ./backend-test-tests.c > coverage_report.txt;
+      run: make backend-test; ./backend-test > test_results.txt; gcov *.gcda >> coverage_report.txt; 
 
     - name: Upload test results
       if: ${{ always() }}

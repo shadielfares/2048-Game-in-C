@@ -214,24 +214,24 @@ void gamePlay(const int screenWidth, const int screenHeight){
 		display2048GUI(screenHeight, screenWidth, gameHeight, gameWidth, tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid, *scoreNum);
 
 	    	if (IsKeyPressed(KEY_RIGHT)) {
-			slideRight(grid, 0);
+			slide(grid, 1);
             		merge(grid,1, scoreNum);
-			slideRight(grid, 0);
+			slide(grid, 1);
 	    	}
             	else if (IsKeyPressed(KEY_DOWN)) {	
-			slideDown(grid, 0);
+			slide(grid, 4);
             		merge(grid,4, scoreNum);
-			slideDown(grid, 0);
+			slide(grid, 4);
 	    	}
             	else if (IsKeyPressed(KEY_LEFT)) {
-			slideLeft(grid, 0);
+			slide(grid, 2);
             		merge(grid,2, scoreNum);
-			slideLeft(grid, 0);
+			slide(grid, 2);
 	    	}
             	else if (IsKeyPressed(KEY_UP)) {
-			slideUp(grid, 0);
+			slide(grid, 3);
             		merge(grid,3, scoreNum);
-			slideUp(grid, 0);
+			slide(grid, 3);
 	    	} else {
 	    		continue;
 	    	}

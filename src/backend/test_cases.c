@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "merge.h"
-#include "slide.h"
+#include "../../include/merge.h"
+#include "../../include/slide.h"
 
 // Utility function to print a grid
 void printGrid(const int grid[4][4]) {
