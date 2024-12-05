@@ -1,4 +1,0 @@
-File '2048_test_cases.c'
-Lines executed:93.48% of 92
-Creating '2048_test_cases.c.gcov'
-

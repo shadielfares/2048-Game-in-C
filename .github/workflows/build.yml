@@ -1,4 +1,4 @@
-name: Load Dependencies for 2048 GUI
+name: 2048 App
 
 on:
   push:
@@ -20,3 +20,22 @@ jobs:
       with:
         name: GUI Executable
         path: ./the-matrix
+
+    - name: Build backend test
+      run: make backend-test; cd ./backend-test > test_results.txt; gcov ./backend-test-merge.c >> coverage_report.txt; gcov ./backend-test-scoring.c >> coverage_report.txt; gcov ./backend-test-slide.c >> coverage_report.txt; gcov ./backend-test-tile-generation.c >> coverage_report.txt; gcov ./backend-test-tests.c >> coverage_report.txt;
+
+    - name: Upload test results
+      if: ${{ always() }}
+
+      uses: actions/upload-artifacts@v4
+      with:
+        name: Test results
+        path: ./test_results.txt
+    
+    - name: Upload coverage report
+      if: ${{ always() }}
+
+      uses: actions/upload-artifacts@v4
+      with:
+        name: Coverage report
+        path: ./coverage_report.txt
