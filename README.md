@@ -44,9 +44,9 @@
    ```
 
 3. **Download the necessary packages**:
-```bash
-sudo apt install libglfw3-dev libopenal-dev libxxf86vm-dev libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev libwayland-dev libxkbcommon-dev; git clone --depth 1 https://github.com/raysan5/raylib.git raylib; cd raylib/src/; make PLATFORM=PLATFORM_DESKTOP; sudo make install; cd ../../; make;
-```
+   ```bash
+   sudo apt install libglfw3-dev libopenal-dev libxxf86vm-dev libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev libwayland-dev libxkbcommon-dev; git clone --depth 1 https://github.com/raysan5/raylib.git raylib; cd raylib/src/; make PLATFORM=PLATFORM_DESKTOP; sudo make install; cd ../../; make;
+   ```
    
 4. **Compile the program**
    Paste the following command into the terminal:
