@@ -1,0 +1,74 @@
+        -:    0:Source:slide.c
+        -:    0:Graph:slide.gcno
+        -:    0:Data:slide.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include <stdlib.h>
+        -:    2:#include <stdio.h>
+        -:    3:#include "../../include/macros.h"
+        -:    4:
+     3125:    5:void slideRight(int new_array[gridRows][gridCols], int k){
+        -:    6:
+    15625:    7:	for(int r = 0; r < gridRows; r++){
+    15620:    8:		for(int c = k; c < gridCols; c++){
+     3120:    9:			slideRight(new_array, c + 1);
+     3120:   10:			if(new_array[r][c + 1] == 0 && c != 3){
+      185:   11:				new_array[r][c + 1] = new_array[r][c];
+      185:   12:				new_array[r][c] = 0;
+      185:   13:			}	
+     3120:   14:		}
+    12500:   15:	}
+     3125:   16:}
+        -:   17:
+     1250:   18:void slideLeft(int new_array[gridRows][gridCols], int k){
+        -:   19:
+     6250:   20:        for(int r = 0; r < gridRows; r++){
+     6248:   21:                for(int c = k; c < gridCols; c++){
+     1248:   22:			slideLeft(new_array, c + 1);
+     1248:   23:                        if(new_array[r][c] == 0 && c != 3){
+      138:   24:                                new_array[r][c] = new_array[r][c + 1];
+      138:   25:                        	new_array[r][c + 1] = 0;
+      138:   26:			}
+        -:   27:			
+     1248:   28:                }
+     5000:   29:        }
+     1250:   30:}
+        -:   31:
+     1250:   32:void slideUp(int new_array[gridRows][gridCols], int k){
+        -:   33:
+     6250:   34:        for(int c = 0; c < gridCols; c++){
+     6248:   35:                for(int r = k; r < gridRows; r++){
+     1248:   36:                        slideUp(new_array, r + 1);
+     1248:   37:                        if(new_array[r][c] == 0 && r != 3){
+      122:   38:                                new_array[r][c] = new_array[r + 1][c];
+      122:   39:                                new_array[r + 1][c] = 0;
+      122:   40:                        }
+     1248:   41:                }
+     5000:   42:        }
+     1250:   43:}
+        -:   44:
+     1250:   45:void slideDown(int new_array[gridRows][gridCols], int k){
+        -:   46:
+     6250:   47:        for(int c = 0; c < gridCols; c++){
+     6248:   48:                for(int r = k; r < gridRows; r++){
+     1248:   49:                        slideDown(new_array, r + 1);
+     1248:   50:                        if(new_array[r + 1][c] == 0 && r != 3){
+       36:   51:                                new_array[r + 1][c] = new_array[r][c];
+       36:   52:                                new_array[r][c] = 0;
+       36:   53:                        }
+     1248:   54:                }
+     5000:   55:        }
+     1250:   56:}
+        -:   57:
+       11:   58:void slide(int array[gridRows][gridCols], int direction){
+       11:   59:	if(direction == 1){
+        5:   60:		slideRight(array, 0);	
+       11:   61:	} else if(direction == 2){
+        2:   62:		slideLeft(array, 0);
+        6:   63:	} else if(direction == 3){
+        2:   64:		slideUp(array, 0);
+        4:   65:	} else if(direction == 4){
+        2:   66:		slideDown(array, 0);
+        2:   67:	}
+        -:   68:
+       11:   69:}

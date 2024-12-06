@@ -1,0 +1,50 @@
+        -:    0:Source:tile_generation.c
+        -:    0:Graph:tile_generation.gcno
+        -:    0:Data:tile_generation.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "../../include/macros.h"
+        -:    2:#include <stdio.h>
+        -:    3:#include <stdlib.h>
+        -:    4:#include <time.h>
+        -:    5:
+        -:    6:// Function to initialize the grid with zeros
+        1:    7:void initializeGrid(int grid[gridRows][gridCols]) {
+        5:    8:    for (int i = 0; i < gridRows; i++) {
+       20:    9:        for (int j = 0; j < gridCols; j++) {
+       16:   10:            grid[i][j] = 0;
+       16:   11:        }
+        4:   12:    }
+        1:   13:}
+        -:   14:
+        -:   15:// Function to add a random tile (2 or 4) to the grid
+        1:   16:void addRandomTile(int grid[gridRows][gridCols]) {
+        -:   17:
+        1:   18:    srand(time(NULL));
+        1:   19:    int emptyCells = 0;
+        -:   20:    int emptyPositions[gridRows * gridCols][2];
+        -:   21:
+        -:   22:    // Find all empty cells
+        5:   23:    for (int i = 0; i < gridRows; i++) {
+       20:   24:        for (int j = 0; j < gridCols; j++) {
+       16:   25:            if (grid[i][j] == 0) {
+       16:   26:                emptyPositions[emptyCells][0] = i;
+       16:   27:                emptyPositions[emptyCells][1] = j;
+       16:   28:                emptyCells++;
+       16:   29:            }
+       16:   30:        }
+        4:   31:    }
+        -:   32:
+        -:   33:    // If there are no empty cells, do nothing
+        1:   34:    if (emptyCells == 0) {
+    #####:   35:	    return;
+        -:   36:    }
+        -:   37:
+        -:   38:    // Choose a random empty cell
+        1:   39:    int randomIndex = rand() % emptyCells;
+        1:   40:    int row = emptyPositions[randomIndex][0];
+        1:   41:    int col = emptyPositions[randomIndex][1];
+        -:   42:
+        -:   43:    // Add a random tile (90% chance of 2, 10% chance of 4)
+        1:   44:    grid[row][col] = (rand() % 10 == 0) ? 4 : 2;
+        1:   45:}

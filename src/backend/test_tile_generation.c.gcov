@@ -1,0 +1,58 @@
+        -:    0:Source:test_tile_generation.c
+        -:    0:Graph:test_tile_generation.gcno
+        -:    0:Data:test_tile_generation.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include <stdio.h>
+        -:    2:#include "../../include/tile_generation.h"
+        -:    3:
+        -:    4:// Utility function to print the grid
+        2:    5:void printGrid(int grid[gridRows][gridCols]) {
+       10:    6:    for (int i = 0; i < gridRows; i++) {
+       40:    7:        for (int j = 0; j < gridCols; j++) {
+       32:    8:            printf("%4d", grid[i][j]);
+       32:    9:        }
+        8:   10:        printf("\n");
+        8:   11:    }
+        2:   12:    printf("\n");
+        2:   13:}
+        -:   14:
+        -:   15:// Test function for addRandomTile
+        1:   16:void testAddRandomTile() {
+        1:   17:    printf("Testing Random Tile Generation...\n");
+        -:   18:
+        -:   19:    int grid[gridRows][gridCols];
+        1:   20:    initializeGrid(grid); // Start with an empty grid
+        -:   21:
+        1:   22:    printf("Grid Before Adding Random Tile:\n");
+        1:   23:    printGrid(grid);
+        -:   24:
+        1:   25:    addRandomTile(grid); // Add one random tile
+        -:   26:
+        1:   27:    printf("Grid After Adding Random Tile:\n");
+        1:   28:    printGrid(grid);
+        -:   29:
+        -:   30:    // Check if at least one cell in the grid is non-zero
+        1:   31:    int isNonEmpty = 0;
+        2:   32:    for (int i = 0; i < gridRows; i++) {
+        7:   33:        for (int j = 0; j < gridCols; j++) {
+        6:   34:            if (grid[i][j] != 0) {
+        1:   35:                isNonEmpty = 1;
+        1:   36:                break;
+        -:   37:            }
+        5:   38:        }
+        2:   39:        if (isNonEmpty) break;
+        1:   40:    }
+        -:   41:
+        1:   42:    if (isNonEmpty) {
+        1:   43:        printf("Random Tile Generation Test Passed!\n");
+        1:   44:    } else {
+    #####:   45:        printf("Random Tile Generation Test Failed!\n");
+        -:   46:    }
+        1:   47:}
+        -:   48:
+        1:   49:int main() {
+        1:   50:    testAddRandomTile();
+        1:   51:    return 0;
+        -:   52:}
+        -:   53:
