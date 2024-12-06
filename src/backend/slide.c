@@ -1,6 +1,25 @@
+/* Kurlan Beeharry, 400521584, December 5 2024
+ *
+ * The slide functionality takes in a 2d array of integers and slides them in a given direction
+ * It takes as input a 2d array and a integer representing the direction to slide to
+ * It returns as side effect the edited array
+ *
+ * */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "../../include/macros.h"
+
+/* Slide Right function
+ *
+ * int new_array[gridRows][gridCols] = array to be used to slide integers
+ * int k = represents initial value of for loop for recursive function
+ *
+ * Slides all integers to the right of the board
+ *
+ * As side effect modifies the given array
+ *
+ * */
 
 void slideRight(int new_array[gridRows][gridCols], int k){
 
@@ -14,6 +33,17 @@ void slideRight(int new_array[gridRows][gridCols], int k){
 		}
 	}
 }
+
+/* Slide Left function
+ *
+ * int new_array[gridRows][gridCols] = array to be used to slide integers
+ * int k = represents initial value of for loop for recursive function
+ *
+ * Slides all integers to the left of the board
+ *
+ * As side effect modifies the given array
+ *
+ * */
 
 void slideLeft(int new_array[gridRows][gridCols], int k){
 
@@ -29,6 +59,17 @@ void slideLeft(int new_array[gridRows][gridCols], int k){
         }
 }
 
+/* Slide Up function
+ *
+ * int new_array[gridRows][gridCols] = array to be used to slide integers
+ * int k = represents initial value of for loop for recursive function
+ *
+ * Slides all integers to the up of the board
+ *
+ * As side effect modifies the given array
+ *
+ * */
+
 void slideUp(int new_array[gridRows][gridCols], int k){
 
         for(int c = 0; c < gridCols; c++){
@@ -42,6 +83,17 @@ void slideUp(int new_array[gridRows][gridCols], int k){
         }
 }
 
+/* Slide Down function
+ *
+ * int new_array[gridRows][gridCols] = array to be used to slide integers
+ * int k = represents initial value of for loop for recursive function
+ *
+ * Slides all integers to the down of the board
+ *
+ * As side effect modifies the given array
+ *
+ * */
+
 void slideDown(int new_array[gridRows][gridCols], int k){
 
         for(int c = 0; c < gridCols; c++){
@@ -54,6 +106,17 @@ void slideDown(int new_array[gridRows][gridCols], int k){
                 }
         }
 }
+
+/* Slide function
+ *
+ * int new_array[gridRows][gridCols] = array to be used to slide integers
+ * int direction = integer representing direction of slide
+ *
+ * Slides all integers to the given side of the board
+ *
+ * As side effect modifies the given array
+ *
+ * */
 
 void slide(int array[gridRows][gridCols], int direction){
 	if(direction == 1){
