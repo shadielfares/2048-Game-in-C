@@ -2,7 +2,7 @@
 #include "../../include/merge.h"
 #include "../../include/slide.h"
 #include "../../include/tile_generation.h"
-
+#include "../../include/scoring.h"
 /*
  * GCOV is not 100% due to no failed generation
  */
@@ -300,9 +300,41 @@ void testTileGeneration(){
     }
 } 
 
+void testHighScore(){
+	initHighScore();
+	int score = 100;
+	highscore(score);
+	score = 200;
+	highscore(score);
+	score = 100;
+	highscore(score);
+	
+	int highscores[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	
+	puts("Initial list of highscores");
+	for(int i = 0; i < 10; i++){
+		printf("%d\n", highscores[i]);
+	}
+	readFile(highscores);
+	
+	int expectedScores[10] = {200, 100, 100, 0, 0, 0, 0, 0, 0, 0};
+	
+	puts("New list of highscores");
+	for(int i = 0; i < 10; i++){
+		printf("%d\n", expectedScores[i]);
+		if(highscores[i] != expectedScores[i] && highscores[i] != 0){
+			puts("Highscores failed!");
+			return;
+		}
+	}
+	
+	puts("Highscores passed!");
+}
+
 int main() {
     testMerge();
     testSlide();
     testTileGeneration();
+    testHighScore();
     return 0;
 }
