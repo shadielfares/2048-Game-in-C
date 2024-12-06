@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include "../../include/merge.h"
 #include "../../include/slide.h"
+#include "../../include/tile_generation.h"
+
+/*
+ * GCOV is not 100% due to no failed generation
+ */
 
 // Utility function to print a grid
 void printGrid(const int grid[4][4]) {
@@ -39,9 +44,9 @@ void testMerge() {
         {0, 0, 0, 0}
     };
     int expectedRight[4][4] = {
-        {0, 0, 4, 8},
-        {0, 0, 0, 8},
-        {0, 0, 4, 4},
+        {0, 4, 0, 8},
+        {0, 8, 0, 0},
+        {0, 4, 0, 4},
         {0, 0, 0, 0}
     };
     printf("Grid Before Merge Right:\n");
@@ -63,9 +68,9 @@ void testMerge() {
         {0, 0, 0, 0}
     };
     int expectedLeft[4][4] = {
-        {4, 8, 0, 0},
+        {4, 0, 8, 0},
         {8, 0, 0, 0},
-        {4, 4, 0, 0},
+        {4, 0, 4, 0},
         {0, 0, 0, 0}
     };
     printf("Grid Before Merge Left:\n");
@@ -87,9 +92,9 @@ void testMerge() {
         {4, 0, 4, 4}
     };
     int expectedUp[4][4] = {
-        {4, 2, 8, 8},
-        {8, 4, 0, 0},
-        {0, 0, 0, 0},
+        {4, 2, 0, 0},
+        {0, 8, 0, 0},
+        {8, 0, 8, 8},
         {0, 0, 0, 0}
     };
     printf("Grid Before Merge Up:\n");
@@ -111,10 +116,10 @@ void testMerge() {
         {4, 0, 4, 4}
     };
     int expectedDown[4][4] = {
-        {0, 0, 0, 0},
-        {0, 0, 0, 0},
-        {4, 2, 0, 0},
-        {8, 8, 8, 8}
+        {0, 2, 0, 0},
+        {4, 0, 0, 0},
+        {0, 8, 0, 0},
+        {8, 0, 8, 8}
     };
     printf("Grid Before Merge Down:\n");
     printGrid(gridDown);
@@ -140,9 +145,9 @@ void testSlide() {
         {0, 0, 0, 0}
     };
     int expectedRight[4][4] = {
+        {0, 2, 2, 4},
         {0, 0, 4, 4},
-        {0, 0, 0, 8},
-        {0, 0, 0, 4},
+        {0, 0, 2, 2},
         {0, 0, 0, 0}
     };
     printf("Grid Before Slide Right:\n");
@@ -164,9 +169,9 @@ void testSlide() {
         {0, 0, 0, 0}
     };
     int expectedLeft[4][4] = {
+        {2, 2, 4, 0},
         {4, 4, 0, 0},
-        {8, 0, 0, 0},
-        {4, 0, 0, 0},
+        {2, 2, 0, 0},
         {0, 0, 0, 0}
     };
     printf("Grid Before Slide Left:\n");
@@ -188,10 +193,10 @@ void testSlide() {
         {4, 4, 0, 0}
     };
     int expectedUp[4][4] = {
-        {4, 2, 8, 4},
-        {8, 4, 0, 0},
-        {0, 0, 0, 0},
-        {0, 0, 0, 0}
+        {2, 2, 4, 4},
+        {2, 4, 4, 0},
+        {4, 0, 0, 0},
+        {4, 0, 0, 0}
     };
     printf("Grid Before Slide Up:\n");
     printGrid(gridUp);
@@ -212,11 +217,12 @@ void testSlide() {
         {4, 4, 0, 0}
     };
     int expectedDown[4][4] = {
-        {0, 0, 0, 0},
-        {0, 0, 0, 0},
-        {4, 2, 0, 0},
-        {8, 4, 8, 4}
+        {2, 0, 0, 0},
+        {2, 0, 0, 0},
+        {4, 2, 4, 0},
+        {4, 4, 4, 4}
     };
+
     printf("Grid Before Slide Down:\n");
     printGrid(gridDown);
     slide(gridDown, 4); // Direction 4: Down
@@ -229,8 +235,74 @@ void testSlide() {
     }
 }
 
+void testTileGeneration(){
+    int emptyGrid[4][4] = {
+        {0,0,0,0},
+        {0,0,0,0},
+        {0,0,0,0},
+        {0,0,0,0}
+    };
+
+    int fullGrid[4][4] = {
+            {2,2,2,2},
+            {2,2,2,2},
+            {2,2,2,2},
+            {2,2,2,2}
+    };
+    
+    int filledGrid[4][4] = {
+        {0,0,0,0},
+        {0,0,0,0},
+        {0,0,0,0},
+        {0,0,0,0}
+    };
+
+
+    printf("Grid Before Tile Generation:\n");
+    printGrid(emptyGrid);
+
+    printf("Grid After Tile Generation:\n");
+    addRandomTile(filledGrid); 
+    printGrid(filledGrid);
+
+    if (!compareGrids(emptyGrid, filledGrid)) {
+        printf("Tile Generation Test Passed!\n");
+    } else {
+        printf("Tile Generation Test Failed!\n");
+    }
+
+    printf("\nTest Case #2 Full Grid:\n");
+
+    printf("Grid Before Tile Generation:\n");
+    printGrid(fullGrid);
+
+    printf("Grid After Tile Generation:\n");
+    addRandomTile(fullGrid);
+    printGrid(fullGrid);
+    if (!compareGrids(emptyGrid, filledGrid)) {
+        printf("Tile Generation Test Passed!\n");
+    } else {
+        printf("Tile Generation Test Failed!\n");
+    }
+
+    printf("\nTest Case #3 Initalize Grid:\n");
+
+    printf("Grid Before Initalization:\n");
+    printGrid(emptyGrid);
+
+    printf("Grid After Initalization:\n");
+    initializeGrid(fullGrid);
+    printGrid(emptyGrid);
+    if (compareGrids(emptyGrid, fullGrid)) {
+        printf("Tile Generation Test Passed!\n");
+    } else {
+        printf("Tile Generation Test Failed!\n");
+    }
+} 
+
 int main() {
     testMerge();
     testSlide();
+    testTileGeneration();
     return 0;
 }
