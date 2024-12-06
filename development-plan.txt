@@ -38,6 +38,7 @@ Aiden
         GUI: Using GTK to create the graphical user interface for the game.
         Help Flag: Creating a help flag in Bash to describe the game and provide user guidance.
 	(UPDATE) Worked on Reflection, Build for Game Executable
+
 Kurlan
 
     Main Tasks: Scoring, Build Workflow (build.yml)
@@ -93,4 +94,4 @@ Phase 4: User Interface and Final Touches - Due Date: Dec. 4
     (UPDATE 3) Workflow Setup (Kurlan), README.md (Shadi), Reflection (Shadi and Aiden)
 
 (UPDATE 3) Phase 5: Complete test cases
-	Complete test cases (Akshayan): Complete test cases for all functions and generate outputs for tests passed.
+	Complete test cases (Akshayan): Complete test cases for all functions and generate outputs for tests passed. (UPDATE 3: Done by Shadi)
