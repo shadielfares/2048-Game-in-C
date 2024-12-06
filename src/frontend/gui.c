@@ -1,3 +1,6 @@
+// Handles accepting user input and displaying the game
+// Created by Aiden, Kerlan; McMaster University, 2024/12/05
+
 #include "raylib.h"
 #include <string.h>
 #include <stdio.h>
@@ -10,6 +13,8 @@
 #include "../../include/tile_generation.h"
 #include "../../include/slide.h"
 #include "../../include/scoring.h"
+
+// Defining colour macros for various tile types
 
 #define BACKGROUND (Color){188, 172, 159, 255}
 #define EMPTY_TILE (Color){204, 193, 180, 255}
@@ -28,6 +33,15 @@
 #define WHITEc (Color){255, 255, 255, 255}
 #define DARKBROWNc (Color){ 76, 63, 47, 255 } 
 
+// Custom 7-segment display that renders digits (0-9) onto the screen
+// Arguments: text in string format, an x and y coordinate (integers), and the text colour
+// Outputs: digits (0-9) to the screen to display the value of each tile
+// Returns: N/A
+
+// This function was created as a result of the drawText function not
+// working in Ubuntu environments; the issue was later rectified but
+// this custom displayText code was kept since it produces results virtually 
+// indentical to drawText, and was a fun programming challenge :)
 void displayText(char * string, int x, int y, Color c) {
 
     int textHeight = 35;
@@ -77,6 +91,13 @@ void displayText(char * string, int x, int y, Color c) {
     }
 }
 
+// Displays the 2048-style grid to the screen
+// Arguments: screen height (int), screen width (int), game window height (int), game window width (int), 
+//            padding around tiles (int), padding for the border (int), tile width (int), tile height (int),
+//            font horizontal offset (int), font vertical offset (int), font size (int), 2D array of ints to represent the grid, and the current score (int)
+// Outputs: The 2048-style grid, containing the values of each coloured tile
+// Returns: N/A
+
 void display2048GUI(const int screenHeight, const int screenWidth, const int gameHeight, const int gameWidth, const int tilePadding, const int border, const int tileWidth, const int tileHeight, const int fontAdjustX, const int fontAdjustY, const int fontSize, int grid[gridRows][gridCols], int scoreNum) {
 	
     char string[10];
@@ -102,6 +123,7 @@ void display2048GUI(const int screenHeight, const int screenWidth, const int gam
 
             DrawRectangle(currentX, currentY, tileWidth, tileHeight, EMPTY_TILE);
 
+            // Decides what colour to draw the tile based on its numerical value
             switch (grid[row][col]) {
 
             case 2:
@@ -141,7 +163,7 @@ void display2048GUI(const int screenHeight, const int screenWidth, const int gam
                 break;
             }
 
-            //DrawRectangle(50, 50, 100, 100, DARKBROWNc);
+            // Displays the value of each tile in its center
 
             if (grid[row][col] != 0) {
 
@@ -168,6 +190,10 @@ void display2048GUI(const int screenHeight, const int screenWidth, const int gam
     EndDrawing();
 }
 
+// Primary gameloop; takes player input and interfaces with all other functions
+// Arguments: screen width (int), screen height (int)
+// Outputs: The entire game, including the GUI interface, start and end menu
+// Returns: N/A
 void gamePlay(const int screenWidth, const int screenHeight){
         //const int screenWidth = 800;
         //const int screenHeight = 900;
@@ -213,6 +239,7 @@ void gamePlay(const int screenWidth, const int screenHeight){
 			
 		display2048GUI(screenHeight, screenWidth, gameHeight, gameWidth, tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid, *scoreNum);
 
+            // Detects user input and performs tile sliding and merging
 	    	if (IsKeyPressed(KEY_RIGHT)) {
 			slide(grid, 1);
             		merge(grid,1, scoreNum);
@@ -235,7 +262,8 @@ void gamePlay(const int screenWidth, const int screenHeight){
 	    	} else {
 	    		continue;
 	    	}
-	
+
+        // Checks if there are no more moves available to the player
 		bool movement = false;
 		bool fullTiles = true;
 		int isMerge = 0;
@@ -252,9 +280,12 @@ void gamePlay(const int screenWidth, const int screenHeight){
 			}
 		}
 		
+        // Generates random tile between moves
 		if(movement){
 			addRandomTile(grid);
 		}
+
+        // Continues merging tiles until no more valid merges remain
 
 		for(int r = 0; r < gridRows; r++){
                         for(int c = 0; c < gridCols; c++){
@@ -286,6 +317,12 @@ void gamePlay(const int screenWidth, const int screenHeight){
 	win(*scoreNum, done);
 }
 
+
+// Handles the win and loss condition
+// Arguments: score (int), current status of the game (int)
+// Outputs: Displays whether the user won or lost,
+//          and updates the user's highscore in the text file
+// Returns: N/A
 void win(int score, int win){
 	const int screenWidth = 800;
 	const int screenHeight = 900;
@@ -322,6 +359,7 @@ void win(int score, int win){
 		const int x5 = (800 - MeasureText((const char *)text5, fontSize3)) * 0.5f;
 		const int x6 = (800 - MeasureText(text6, fontSize2)) * 0.5f;	
 
+        // Displays the appropriate win/loss screen depending on the game state
 		BeginDrawing();
 		{
 			ClearBackground(TILE2);
@@ -340,6 +378,8 @@ void win(int score, int win){
 		}
 		EndDrawing();
 	}
+
+    // Allows user to restart or quit the game
 
 	if (IsKeyPressed(KEY_R))
         {

@@ -1,3 +1,6 @@
+// Initializes GUI and contains primary gameloop for The Matrix game
+// Created by Kurlan, Shadi, Aiden, and Akshayan; McMaster University, 2024/12/05
+
 #include "raylib.h"
 #include <string.h>
 #include <stdio.h>
@@ -14,9 +17,18 @@
 //----------------------- -------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
+
+// Handles the primary gameloop and accesses player high-score
+// Globals: N/A
+// Arguments: number of arguments, arguments
+// Outputs: The GUI of the game (within gamePlay function), and a final highscore
+// Returns: int
+
 int main(int argc, char *argv[])
 {   
 
+	// Display --help flags to the user
+	// Provides instructions on how to play the game
     if (argc >= 2 && strcmp(argv[1], "--help") == 0) {
 
         printf("----Welcome to The Matrix----\n");
@@ -27,9 +39,13 @@ int main(int argc, char *argv[])
     }
 
     else {
+
+		// Initialize screen size
 	    const int screenWidth = 800;
 	    const int screenHeight = 900;
 	    InitWindow(screenWidth, screenHeight, "The Matrix");
+
+		// Access locally saved highscores
 	    FILE *file;
 	    char *fileName = "highscore.txt";
 
@@ -39,121 +55,6 @@ int main(int argc, char *argv[])
 	    	fclose(file);
 	    }
 
+		// Begin main game-loop
 	    gamePlay(screenWidth, screenHeight);
-        // Initialization
-    //-------------------------------------------------------------------------------------
-/*
-        const int screenWidth = 800;
-        const int screenHeight = 900;
-
-        const int gameWidth = screenWidth;
-        const int gameHeight = 800;
-
-        const int fontSize = 50;
-        const int fontAdjustX = -13;
-        const int fontAdjustY = -20;
-
-        // Defined as the padding on one side of the tile/border on one side of the screen
-        const int border = 10;
-        const int tilePadding = 10;
-
-        const int tileWidth = (int)((double)(gameWidth - border * 2) / (double)gridCols - (double)(2 * tilePadding));
-        const int tileHeight = (int)((double)(gameHeight - border * 2) / (double)gridRows - (double)(2 * tilePadding));
-
-
-        int grid[gridRows][gridCols];
-	bool done = false;
-
-        initializeGrid(grid);
-	addRandomTile(grid);
-	addRandomTile(grid);
-
-        InitWindow(screenWidth, screenHeight, "The Matrix");
-
-        SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
-        //--------------------------------------------------------------------------------------
-
-        // Main game loop
-        while (!WindowShouldClose() && !done)    // Detect window close button or ESC key
-        {
-            	int oldGrid[gridRows][gridCols];
-            
-		for(int r = 0; r < gridRows; r++){
-			for(int c = 0; c < gridCols; c++){
-				oldGrid[r][c] = grid[r][c];
-			}
-		}
-		display2048GUI(screenHeight, screenWidth, gameHeight, gameWidth, tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid);
-
-	   	
-	    	if (IsKeyPressed(KEY_RIGHT)) {
-                	printf("Right");
-			slideRight(grid, 0);
-            		merge(grid,1);
-			slideRight(grid, 0);
-	    	}
-            	else if (IsKeyPressed(KEY_DOWN)) {
-                	printf("Down");
-			slideDown(grid, 0);
-            		merge(grid,4);
-			slideDown(grid, 0);
-	    	}
-            	else if (IsKeyPressed(KEY_LEFT)) {
-                	printf("Left");
-			slideLeft(grid, 0);
-            		merge(grid,2);
-			slideLeft(grid, 0);
-	    	}
-            	else if (IsKeyPressed(KEY_UP)) {
-                	printf("Up");
-			slideUp(grid, 0);
-            		merge(grid,3);
-			slideUp(grid, 0);
-	    	} else {
-	    		continue;
-	    	}
-	
-		bool movement = false;
-		bool fullTiles = true;
-
-		for(int r = 0; r < gridRows; r++){
-			for(int c = 0; c < gridCols; c++){
-				if(oldGrid[r][c] != grid[r][c]){
-					movement = true;
-				}
-				
-				if(grid[r][c] == 2048){	
-				        done = true;
-			        }	       
-			}
-		}
-		
-		if(movement){
-			addRandomTile(grid);
-		}
-
-		for(int r = 0; r < gridRows; r++){
-                        for(int c = 0; c < gridCols; c++){
-				if(grid[r][c] == 0){
-                                        fullTiles = false;
-                                }	
-			}
-		}
-
-            display2048GUI(screenHeight, screenWidth, gameHeight, gameWidth, tilePadding, border, tileWidth, tileHeight, fontAdjustX, fontAdjustY, fontSize, grid);
-	
-		if(!fullTiles){
-			continue;
-		} else {
-			done = true;
-		}
-	}
-	*/
-        // De-Initialization
-        //--------------------------------------------------------------------------------------
-        //CloseWindow();        // Close window and OpenGL context
-        //--------------------------------------------------------------------------------------
-
-        //return 0;
-    }
 }
