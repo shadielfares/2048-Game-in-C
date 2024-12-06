@@ -57,4 +57,5 @@ int main(int argc, char *argv[])
 
 		// Begin main game-loop
 	    gamePlay(screenWidth, screenHeight);
+	}
 }

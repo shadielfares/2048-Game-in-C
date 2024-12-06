@@ -1,5 +1,5 @@
 // Handles accepting user input and displaying the game
-// Created by Aiden, Kerlan; McMaster University, 2024/12/05
+// Created by Aiden, Kurlan; McMaster University, 2024/12/05
 
 #include "raylib.h"
 #include <string.h>
