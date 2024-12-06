@@ -59,3 +59,5 @@ The game aims to slide numbered tiles on a grid to combine them to create a tile
    ```bash
    ./the-matrix
    ```
+
+It is pretty fun :)
